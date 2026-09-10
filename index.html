@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Rahul Online Centre - होम पेज (झाझा)</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Top Live Announcement Strip (Connected to Admin) -->
+  <div class="top-bar">
+    <div class="container" style="display:flex; align-items:center; gap:8px;">
+      <span style="background:#e11d48; color:#fff; font-size:9px; font-weight:800; padding:2px 6px; border-radius:3px;">LIVE</span>
+      <marquee id="liveTickerText" behavior="scroll" direction="left" scrollamount="5">
+        📢 बिहार SSC / BPSC ऑनलाइन भर्ती फॉर्म प्रारंभ • आय, जाति, निवास प्रमाण पत्र • नया पैन कार्ड मात्र 3 दिन में • आधार बैंकिंग नकद निकासी (AEPS)
+      </marquee>
+    </div>
+  </div>
+
+  <!-- Header Navbar with Theme & 3-Line Menu Buttons -->
+  <header class="navbar">
+    <div class="container nav-flex">
+      <a href="index.html" class="brand">
+        <div class="brand-icon"><i class="fa-solid fa-laptop-code"></i></div>
+        <div>
+          <div class="brand-title">Rahul Online Centre(CSC)</div>
+          <div class="brand-sub">पाण्डेयडीह रोड, झाझा (जमुई)</div>
+        </div>
+      </a>
+
+      <div class="nav-btns">
+        <button class="btn-icon" id="themeBtn" title="डार्क/लाइट मोड"><i class="fa-solid fa-moon"></i></button>
+        <button class="btn-icon" id="menuBtn" title="मेनू"><i class="fa-solid fa-bars"></i></button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Side Navigation Drawer (Updated Layout) -->
+  <div class="drawer-overlay" id="overlay"></div>
+  <aside class="drawer" id="drawer">
+    <div class="drawer-head">
+      <div>
+        <h3 style="margin:0; font-size:16px;">Rahul Online Centre</h3>
+        <p style="font-size: 11px; color:#94a3b8; margin:2px 0 6px 0;">पाण्डेयडीह रोड, झाझा (811308)</p>
+        <!-- Live Status Pill in Drawer -->
+        <span id="drawerStoreStatus" style="font-size:10px; font-weight:800; padding:2px 8px; border-radius:10px; background:#fee2e2; color:#dc2626; display:inline-block; transition: all 0.3s ease;">
+          ● अभी बंद है (Closed)
+        </span>
+      </div>
+      <button id="closeDrawer" style="background:none; border:none; color:#fff; font-size:24px; cursor:pointer;">&times;</button>
+    </div>
+
+    <ul class="drawer-menu">
+      <div style="font-size:10px; text-transform:uppercase; font-weight:800; color:var(--text-muted); padding:10px 16px 4px 16px;">मुख्य नेविगेशन</div>
+      <li><a href="index.html" style="color:var(--primary); font-weight:800;"><i class="fa-solid fa-house"></i> 1. होम पेज (Home)</a></li>
+      <li><a href="services.html"><i class="fa-solid fa-list-check"></i> 2. सेवाएँ व दस्तावेज़ (Services)</a></li>
+      <li><a href="apply.html"><i class="fa-solid fa-ticket"></i> 3. ऑनलाइन टोकन फॉर्म (Apply)</a></li>
+      <li><a href="contact.html"><i class="fa-solid fa-map-location-dot"></i> 4. संपर्क व लोकेशन (Contact)</a></li>
+
+      <div style="font-size:10px; text-transform:uppercase; font-weight:800; color:var(--text-muted); padding:10px 16px 4px 16px;">त्वरित सेवा चयन (Quick Apply)</div>
+      <li><a href="apply.html?srv=जाति प्रमाण पत्र"><i class="fa-solid fa-file-shield"></i> जाति प्रमाण पत्र</a></li>
+      <li><a href="apply.html?srv=आय प्रमाण पत्र"><i class="fa-solid fa-file-invoice-dollar"></i> आय प्रमाण पत्र</a></li>
+      <li><a href="apply.html?srv=निवास प्रमाण पत्र"><i class="fa-solid fa-house-user"></i> निवास प्रमाण पत्र</a></li>
+      <li><a href="apply.html?srv=नया पैन कार्ड"><i class="fa-solid fa-id-card"></i> नया पैन कार्ड</a></li>
+      <li><a href="apply.html?srv=ऑनलाइन भर्ती परीक्षा फॉर्म"><i class="fa-solid fa-graduation-cap"></i> प्रतियोगी परीक्षा फॉर्म</a></li>
+      <li><a href="apply.html?srv=PF निकासी (Provident Fund)"><i class="fa-solid fa-bolt"></i> बिजली बिल व PF निकासी</a></li>
+    </ul>
+
+    <div style="padding:14px; border-top:1px solid var(--border); display:flex; flex-direction:column; gap:8px;">
+      <!-- WhatsApp Share Link -->
+      <a href="https://api.whatsapp.com/send?text=*Rahul%20Online%20Centre%20(झाझा)*%20पर%20जाति,%20आय,%20निवास,%20पैन%20कार्ड%20व%20सरकारी%20फॉर्म%20घर%20बैठे%20भरवाएं।%20टोकन%20लिंक:%20https://rahulonlinecentre.in" target="_blank" style="background:#0284c7; color:#fff; padding:9px; text-align:center; border-radius:8px; font-size:11.5px; font-weight:800; text-decoration:none; display:flex; align-items:center; justify-content:center; gap:6px;">
+        <i class="fa-solid fa-share-nodes"></i> दोस्तों को WhatsApp पर शेयर करें
+      </a>
+
+      <a href="tel:9546565270" style="background:var(--bg); border:1px solid var(--border); color:var(--text); padding:9px; text-align:center; border-radius:8px; font-size:12px; font-weight:700; text-decoration:none;">
+        <i class="fa-solid fa-phone"></i> 9546565270
+      </a>
+      <a href="mailto:Rahul9117892261@gmail.com" style="background:var(--bg); border:1px solid var(--border); color:var(--text); padding:9px; text-align:center; border-radius:8px; font-size:12px; font-weight:700; text-decoration:none;">
+        <i class="fa-solid fa-envelope"></i> ईमेल भेजें
+      </a>
+      <a href="https://wa.me/919546565270?text=नमस्ते%20राहुल%20भैया" target="_blank" style="background:var(--wa); color:#fff; padding:9px; text-align:center; border-radius:8px; font-size:12px; font-weight:700; text-decoration:none;">
+        <i class="fa-brands fa-whatsapp"></i> WhatsApp चैट
+      </a>
+
+      <div style="text-align:center; margin-top:4px;">
+        <a href="admin.html" style="color:#64748b; font-size:11px; text-decoration:none; font-weight:600;">
+          <i class="fa-solid fa-lock"></i> संचालक एडमिन लॉगिन
+        </a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Live Time & Store Status Quick Banner (Real-time Auto & Admin Sync) -->
+  <div style="background:var(--card-bg); border-bottom:1px solid var(--border); padding:8px 0; font-size:11px;">
+    <div class="container" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
+      <div style="display:flex; align-items:center; gap:6px; color:var(--text);">
+        <i class="fa-regular fa-clock" style="color:var(--primary);"></i>
+        <span><strong>समय:</strong> <span id="homeStoreTiming">सुबह 8:00 AM से रात 8:00 PM (सातों दिन)</span></span>
+      </div>
+      <span id="homeStoreStatus" style="font-size:10px; font-weight:800; padding:2px 8px; border-radius:10px; transition: all 0.3s ease;">
+        ● जाँच हो रही है...
+      </span>
+    </div>
+  </div>
+
+  <!-- Main Content Area -->
+  <main class="container">
+
+    <!-- Hero Card Banner -->
+    <section style="padding:16px 0;">
+      <div class="card" style="background:linear-gradient(135deg, #1e3a8a, #2563eb); color:#ffffff; border:none; box-shadow:0 6px 18px rgba(29,78,216,0.25);">
+        <span style="background:rgba(255,255,255,0.2); font-size:10px; font-weight:700; padding:3px 10px; border-radius:20px; display:inline-block; margin-bottom:10px;">
+          <i class="fa-solid fa-certificate"></i> 100% अधिकृत डिजिटल सेवा केंद्र
+        </span>
+        <h1 style="font-size:21px; font-weight:800; line-height:1.3; margin-bottom:8px;">डिजिटल सेवा एवं ऑनलाइन समाधान का भरोसेमंद केंद्र</h1>
+        <p style="font-size:12px; color:#dbeafe; line-height:1.5; margin-bottom:16px;">
+          पाण्डेयडीह रोड, झाझा (जमुई) स्थित केंद्र पर जाति, आय, निवास, पैन कार्ड, आधार बैंकिंग और सरकारी नौकरी फॉर्म की त्वरित व सुरक्षित सुविधा।
+        </p>
+
+        <!-- CTA Buttons -->
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          <a href="services.html" style="background:#ffffff; color:#1e3a8a; text-decoration:none; font-weight:700; font-size:13px; padding:11px; border-radius:8px; text-align:center;">
+            <i class="fa-solid fa-list-check"></i> सभी सेवाएँ व आवश्यक दस्तावेज़ देखें →
+          </a>
+          <a href="apply.html" style="background:var(--wa); color:#ffffff; text-decoration:none; font-weight:700; font-size:13px; padding:11px; border-radius:8px; text-align:center;">
+            <i class="fa-solid fa-paper-plane"></i> घर बैठे ऑनलाइन टोकन भेजें →
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quick Action Contact Strip -->
+    <section style="margin-bottom:18px;">
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(130px, 1fr)); gap:8px;">
+        <a href="tel:9546565270" style="background:var(--card-bg); border:1px solid var(--border); color:var(--text); padding:10px; border-radius:10px; text-decoration:none; text-align:center; font-size:11px; font-weight:700;">
+          <i class="fa-solid fa-phone" style="color:var(--primary); font-size:15px; display:block; margin-bottom:4px;"></i> सीधा कॉल
+        </a>
+        <a href="mailto:Rahul9117892261@gmail.com?subject=Inquiry%20from%20Website" style="background:var(--card-bg); border:1px solid var(--border); color:var(--text); padding:10px; border-radius:10px; text-decoration:none; text-align:center; font-size:11px; font-weight:700;">
+          <i class="fa-solid fa-envelope" style="color:#ea580c; font-size:15px; display:block; margin-bottom:4px;"></i> ईमेल भेजें
+        </a>
+        <a href="contact.html" style="background:var(--card-bg); border:1px solid var(--border); color:var(--text); padding:10px; border-radius:10px; text-decoration:none; text-align:center; font-size:11px; font-weight:700;">
+          <i class="fa-solid fa-map-location-dot" style="color:#dc2626; font-size:15px; display:block; margin-bottom:4px;"></i> पता व मैप
+        </a>
+        <a href="https://maps.app.goo.gl/mQUPjjVqzMn3nSbZ7" target="_blank" style="background:var(--card-bg); border:1px solid var(--border); color:var(--text); padding:10px; border-radius:10px; text-decoration:none; text-align:center; font-size:11px; font-weight:700;">
+          <i class="fa-solid fa-diamond-turn-right" style="color:#2563eb; font-size:15px; display:block; margin-bottom:4px;"></i> लाइव GPS
+        </a>
+      </div>
+    </section>
+
+    <!-- Official Store Online Payment (QR Code) Card -->
+    <section style="margin-bottom:24px;">
+      <div class="card" style="border:2px dashed var(--primary); text-align:center; padding:18px;">
+        <span style="background:#e0e7ff; color:var(--primary); font-size:10px; font-weight:800; padding:3px 10px; border-radius:20px; display:inline-block; margin-bottom:8px;">
+          <i class="fa-solid fa-qrcode"></i> डिजिटल भुगतान सुविधा
+        </span>
+        <h3 style="font-size:16px; font-weight:800; margin-bottom:4px;">दुकान का आधिकारिक QR कोड</h3>
+        <p style="font-size:11px; color:var(--text-muted); margin-bottom:14px;">PhonePe, Google Pay, Paytm या किसी भी UPI ऐप से स्कैन करके पेमेंट करें</p>
+
+        <div style="width:190px; height:190px; margin:0 auto 12px auto; background:#ffffff; border-radius:12px; padding:10px; box-shadow:0 4px 14px rgba(0,0,0,0.08); border:1px solid var(--border);">
+          <img src="shop-qr.jpg" alt="Rahul Online Centre Payment QR" style="width:100%; height:100%; object-fit:contain; display:block;" onerror="this.src='https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=upi://pay?pa=9546565270@ybl&pn=Rahul%20Online%20Centre'">
+        </div>
+
+        <div style="background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:8px 12px; display:inline-flex; align-items:center; gap:8px; margin-bottom:10px;">
+          <span style="font-size:12px; font-weight:700; color:var(--text);" id="upiIdText">9546565270@ybl</span>
+          <button onclick="copyUPI()" style="background:var(--primary); color:#fff; border:none; padding:4px 8px; border-radius:5px; font-size:10px; font-weight:700; cursor:pointer;">
+            <i class="fa-regular fa-copy"></i> कॉपी करें
+          </button>
+        </div>
+        <p style="font-size:10px; color:#16a34a; font-weight:700;">✓ पेमेंट करने के बाद स्क्रीनशॉट WhatsApp पर भेजें</p>
+      </div>
+    </section>
+
+    <!-- Real Store Photos Preview -->
+    <section style="margin-bottom:24px;">
+      <div style="text-align:center; margin-bottom:14px;">
+        <span style="font-size:10px; font-weight:800; color:var(--primary); letter-spacing:1px; text-transform:uppercase;">OUR STORE</span>
+        <h2 style="font-size:18px; font-weight:800;">हमारी दुकान की वास्तविक झलक</h2>
+        <p style="font-size:11px; color:var(--text-muted); margin-top:2px;">पाण्डेयडीह रोड, झाझा स्थित केंद्र की वास्तविक तस्वीरें</p>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:16px;">
+        <!-- Photo 1: Shop Front -->
+        <div class="card" style="padding:0; overflow:hidden;">
+          <div style="width:100%; height:auto; background:#000;">
+            <img src="shop-front.jpg" alt="Rahul Online Centre Board" style="width:100%; height:100%; object-fit:contain; display:block;" onerror="this.src='https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=600&auto=format&fit=crop&q=60'">
+          </div>
+          <div style="padding:14px;">
+            <h4 style="font-size:14px; font-weight:700; display:flex; align-items:center; gap:8px; margin-bottom:4px;">
+              <i class="fa-solid fa-store" style="color:var(--primary);"></i> मुख्य दुकान बोर्ड एवं प्रवेश द्वार
+            </h4>
+            <p style="font-size:12px; color:var(--text-muted);">पाण्डेयडीह रोड, झाझा (जमुई) - बोर्ड पर सभी सेवाएँ एवं प्रो. राहुल कुमार पंडित का विवरण अंकित है।</p>
+          </div>
+        </div>
+
+        <!-- Photo 2: Shop Inside -->
+        <div class="card" style="padding:0; overflow:hidden;">
+          <div style="width:100%; height:220px; background:#000;">
+            <img src="shop-inside.jpg" alt="Rahul Online Centre Inside" style="width:100%; height:100%; object-fit:cover; display:block;" onerror="this.src='https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=600&auto=format&fit=crop&q=60'">
+          </div>
+          <div style="padding:14px;">
+            <h4 style="font-size:14px; font-weight:700; display:flex; align-items:center; gap:8px; margin-bottom:4px;">
+              <i class="fa-solid fa-laptop" style="color:var(--primary);"></i> सर्विस काउंटर एवं कंप्यूटर केबिन
+            </h4>
+            <p style="font-size:12px; color:var(--text-muted);">हाई-स्पीड ब्रॉडबैंड, लेज़र प्रिंटिंग, लेमिनेशन एवं बायोमेट्रिक नकद निकासी काउंटर।</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Verified Address & Timing Overview Card -->
+    <section style="margin-bottom:24px;">
+      <div class="card" style="border-left:4px solid var(--primary);">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px;">
+          <div>
+            <span style="background:#fee2e2; color:#dc2626; font-size:9px; font-weight:800; padding:2px 7px; border-radius:10px; display:inline-block; margin-bottom:4px;">सत्यापित पता</span>
+            <h3 style="font-size:16px; font-weight:800;">Rahul Online Centre</h3>
+          </div>
+          <a href="contact.html" style="font-size:11px; font-weight:700; color:var(--primary); text-decoration:none;">पूरा मैप देखें →</a>
+        </div>
+        <p id="fullAddressText" style="font-size:12px; color:var(--text); line-height:1.6; margin-bottom:10px;">
+          📍 <strong>स्थान:</strong> पाण्डेयडीह रोड, पोस्ट एवं थाना: झाझा, जिला: जमुई (बिहार) - <strong>811308</strong><br>
+          ⏰ <strong>समय:</strong> प्रतिदिन सुबह 8:00 AM से रात 8:00 PM तक खुला रहता है।<br>
+          ✉️ <strong>ईमेल:</strong> <a href="mailto:Rahul9117892261@gmail.com" style="color:var(--primary); text-decoration:none; font-weight:700;">Rahul9117892261@gmail.com</a>
+        </p>
+
+        <div style="display:flex; gap:8px;">
+          <button onclick="copyAddress()" style="flex:1; background:var(--bg); border:1px solid var(--border); color:var(--text); padding:9px; border-radius:8px; font-size:11px; font-weight:700; cursor:pointer;">
+            <i class="fa-regular fa-copy"></i> पता कॉपी करें
+          </button>
+          <a href="contact.html" class="btn-primary" style="flex:2; font-size:11px; padding:9px; text-align:center; text-decoration:none;">
+            <i class="fa-solid fa-map-location-dot"></i> संपर्क एवं गूगल मैप दिशा-निर्देश
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <h4 style="color:#fff; font-size:14px; margin-bottom:4px;">Rahul Online Centre</h4>
+      <p style="font-size:11px; margin-bottom:4px;">पाण्डेयडीह रोड, झाझा, जमुई (बिहार) - 811308</p>
+      <p style="font-size:11px; margin-bottom:8px;">
+        📞 <a href="tel:9546565270" style="color:#dbeafe; text-decoration:none; font-weight:700;">+91 9546565270</a> &nbsp;|&nbsp; 
+        ✉️ <a href="mailto:Rahul9117892261@gmail.com" style="color:#dbeafe; text-decoration:none; font-weight:700;">Rahul9117892261@gmail.com</a>
+      </p>
+      <div style="font-size:10px; border-top:1px solid rgba(255,255,255,0.1); padding-top:10px; margin-top:10px; color:#94a3b8;">
+        © 2026 Rahul Online Centre. सर्वाधिकार सुरक्षित।
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating Quick WhatsApp Button -->
+  <a href="https://wa.me/919546565270?text=नमस्ते%20राहुल%20भैया" target="_blank" style="position:fixed; bottom:20px; right:20px; background:var(--wa); color:#fff; width:48px; height:48px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:24px; text-decoration:none; box-shadow:0 4px 12px rgba(22, 163, 74, 0.4); z-index:500;">
+    <i class="fa-brands fa-whatsapp"></i>
+  </a>
+
+  <!-- Script Engine & Synchronization -->
+  <script src="script.js"></script>
+
+  <script>
+    // 1. Dark Mode Logic with LocalStorage
+    const themeBtn = document.getElementById("themeBtn");
+    if (localStorage.getItem("roc_theme") === "dark") {
+      document.body.classList.add("dark-mode");
+      if (themeBtn) themeBtn.innerHTML = '<i class="fa-solid fa-sun"></i>';
+    }
+
+    if (themeBtn) {
+      themeBtn.onclick = function() {
+        document.body.classList.toggle("dark-mode");
+        const isDark = document.body.classList.contains("dark-mode");
+        localStorage.setItem("roc_theme", isDark ? "dark" : "light");
+        themeBtn.innerHTML = isDark ? '<i class="fa-solid fa-sun"></i>' : '<i class="fa-solid fa-moon"></i>';
+      };
+    }
+
+    // 2. Real-Time Auto Clock & Store Status Engine (Syncs both Main & Drawer badges)
+    function updateShopLiveStatus() {
+      const statusBadge = document.getElementById("homeStoreStatus");
+      const drawerBadge = document.getElementById("drawerStoreStatus");
+
+      const savedStatus = localStorage.getItem("roc_status");
+
+      // Check admin manual override
+      if (savedStatus === "closed") {
+        applyStatusStyles("● आज बंद है (Closed)", "#fee2e2", "#dc2626");
+        return;
+      } else if (savedStatus === "open") {
+        applyStatusStyles("● अभी खुली है (Open)", "#dcfce7", "#15803d");
+        return;
+      }
+
+      // Auto time based (8:00 AM to 8:00 PM)
+      const currentHour = new Date().getHours();
+      const isOpen = (currentHour >= 8 && currentHour < 20);
+
+      if (isOpen) {
+        applyStatusStyles("● अभी खुली है (Open)", "#dcfce7", "#15803d");
+      } else {
+        applyStatusStyles("● अभी बंद है (Closed)", "#fee2e2", "#dc2626");
+      }
+
+      function applyStatusStyles(text, bg, color) {
+        if (statusBadge) {
+          statusBadge.innerText = text;
+          statusBadge.style.background = bg;
+          statusBadge.style.color = color;
+        }
+        if (drawerBadge) {
+          drawerBadge.innerText = text;
+          drawerBadge.style.background = bg;
+          drawerBadge.style.color = color;
+        }
+      }
+    }
+
+    // 3. Admin Panel Data Sync (Ticker, Timing, UPI)
+    document.addEventListener("DOMContentLoaded", () => {
+      // Ticker Sync
+      const savedTicker = localStorage.getItem("roc_ticker");
+      const tickerEl = document.getElementById("liveTickerText");
+      if (savedTicker && tickerEl) tickerEl.innerText = savedTicker;
+
+      // Timing Sync
+      const savedTiming = localStorage.getItem("roc_timing");
+      const timingEl = document.getElementById("homeStoreTiming");
+      if (savedTiming && timingEl) timingEl.innerText = savedTiming;
+
+      // UPI Sync
+      const savedUPI = localStorage.getItem("roc_upi");
+      const upiTextEl = document.getElementById("upiIdText");
+      if (savedUPI && upiTextEl) upiTextEl.innerText = savedUPI;
+
+      // Run Status check immediately
+      updateShopLiveStatus();
+    });
+
+    // Check status every 1 minute
+    setInterval(updateShopLiveStatus, 60000);
+
+    // 4. Helper Functions
+    function copyAddress() {
+      navigator.clipboard.writeText("राहुल ऑनलाइन सेंटर, पाण्डेयडीह रोड, पोस्ट एवं थाना: झाझा, जिला: जमुई (बिहार) - 811308");
+      alert("✓ दुकान का पूरा पता कॉपी हो गया!");
+    }
+
+    function copyUPI() {
+      const upi = document.getElementById("upiIdText").innerText;
+      navigator.clipboard.writeText(upi);
+      alert("✓ UPI ID कॉपी हो गया: " + upi);
+    }
+  </script>
+
+</body>
+</html>

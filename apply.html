@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>ऑनलाइन टोकन एवं पेमेंट - Rahul Online Centre</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .service-category-title {
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin: 14px 0 6px 0;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .service-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      padding: 9px 12px;
+      border-radius: 8px;
+      margin-bottom: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .service-item:active {
+      transform: scale(0.99);
+    }
+    .service-item.selected {
+      border-color: var(--primary);
+      background: rgba(37, 99, 235, 0.05);
+    }
+    .service-item input[type="checkbox"] {
+      width: 17px;
+      height: 17px;
+      accent-color: var(--primary);
+      cursor: pointer;
+    }
+    .srv-label {
+      flex: 1;
+      margin-left: 10px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .srv-price {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    /* UPI Multi-App Grid */
+    .upi-apps-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .upi-app-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 10px 8px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 800;
+      color: #ffffff;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      transition: transform 0.15s ease;
+    }
+    .upi-app-btn:active {
+      transform: scale(0.97);
+    }
+    .btn-phonepe { background: #5f259f; }
+    .btn-gpay { background: #1a73e8; }
+    .btn-paytm { background: #002970; }
+    .btn-all-upi { background: #059669; grid-column: span 2; }
+
+    /* Verification Notice Card */
+    .verify-notice-box {
+      background: #fffbeb;
+      border: 1.5px solid #f59e0b;
+      color: #92400e;
+      padding: 12px;
+      border-radius: 10px;
+      font-size: 11px;
+      font-weight: 700;
+      line-height: 1.5;
+      text-align: left;
+      margin-top: 10px;
+    }
+
+    /* Submit Button */
+    .submit-token-btn {
+      width: 100%;
+      background: var(--wa);
+      color: #fff;
+      border: none;
+      padding: 13px;
+      border-radius: 10px;
+      font-size: 13.5px;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+
+    /* Token Receipt Modal */
+    .receipt-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(4px);
+      z-index: 99999;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+    .receipt-card {
+      background: var(--card-bg, #ffffff);
+      color: var(--text, #0f172a);
+      border: 2px solid var(--primary, #2563eb);
+      border-radius: 14px;
+      max-width: 440px;
+      width: 100%;
+      padding: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      animation: popupSlide 0.3s ease-out;
+    }
+    @keyframes popupSlide {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    .receipt-head {
+      border-bottom: 2px dashed var(--border, #cbd5e1);
+      padding-bottom: 12px;
+      margin-bottom: 14px;
+      text-align: center;
+    }
+    .token-badge-number {
+      background: linear-gradient(135deg, #1e40af, #2563eb);
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: 800;
+      padding: 6px 14px;
+      border-radius: 8px;
+      display: inline-block;
+      margin-top: 6px;
+      letter-spacing: 1px;
+    }
+    .receipt-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      margin-bottom: 6px;
+      border-bottom: 1px solid var(--border, #f1f5f9);
+      padding-bottom: 4px;
+    }
+    .receipt-row strong {
+      color: var(--text);
+    }
+    .receipt-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    @page {
+      size: A4 portrait;
+      margin: 10mm;
+    }
+
+    @media print {
+      html, body {
+        width: 100% !important;
+        height: auto !important;
+        overflow: visible !important;
+        background: #ffffff !important;
+        color: #000000 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+      body > *:not(.receipt-modal) {
+        display: none !important;
+      }
+      .receipt-modal {
+        position: static !important;
+        display: block !important;
+        background: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        width: 100% !important;
+        height: auto !important;
+      }
+      .receipt-card {
+        border: 2px solid #0f172a !important;
+        border-radius: 12px !important;
+        background: #ffffff !important;
+        color: #000000 !important;
+        box-shadow: none !important;
+        margin: 15mm auto !important;
+        width: 90% !important;
+        max-width: 500px !important;
+        padding: 24px !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+      }
+      .token-badge-number {
+        background: #0f172a !important;
+        color: #ffffff !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+      .receipt-actions, .close-receipt-btn {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Live Strip -->
+  <div class="top-bar">
+    <div class="container" style="display:flex; align-items:center; gap:8px;">
+      <span style="background:#e11d48; color:#fff; font-size:9px; font-weight:800; padding:2px 6px; border-radius:3px;">LIVE</span>
+      <marquee id="applyLiveTicker" behavior="scroll" direction="left" scrollamount="5">
+        📢 घर बैठे ऑनलाइन टोकन भेजें • दुकान पर आने के लिए Google Map GPS का उपयोग करें • कॉलिंग: 9546565270
+      </marquee>
+    </div>
+  </div>
+
+  <!-- Header Navbar -->
+  <header class="navbar">
+    <div class="container nav-flex">
+      <a href="index.html" class="brand">
+        <div class="brand-icon"><i class="fa-solid fa-laptop-code"></i></div>
+        <div>
+          <div class="brand-title">Rahul Online Centre(CSC)</div>
+          <div class="brand-sub">पाण्डेयडीह रोड, झाझा (जमुई)</div>
+        </div>
+      </a>
+
+      <div class="nav-btns">
+        <button class="btn-icon" id="themeBtn" title="डार्क/लाइट मोड"><i class="fa-solid fa-moon"></i></button>
+        <button class="btn-icon" id="menuBtn" title="मेनू"><i class="fa-solid fa-bars"></i></button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Side Navigation Drawer -->
+  <div class="drawer-overlay" id="overlay"></div>
+  <aside class="drawer" id="drawer">
+    <div class="drawer-head">
+      <div>
+        <h3>Rahul Online Centre</h3>
+        <p style="font-size: 11px; color:#94a3b8;">पाण्डेयडीह रोड, झाझा (811308)</p>
+      </div>
+      <button id="closeDrawer" style="background:none; border:none; color:#fff; font-size:24px; cursor:pointer;">&times;</button>
+    </div>
+
+    <ul class="drawer-menu">
+      <div style="font-size:10px; text-transform:uppercase; font-weight:800; color:var(--text-muted); padding:10px 16px 4px 16px;">मुख्य नेविगेशन</div>
+      <li><a href="index.html"><i class="fa-solid fa-house"></i> 1. होम पेज (Home)</a></li>
+      <li><a href="services.html"><i class="fa-solid fa-list-check"></i> 2. सेवाएँ व दस्तावेज़ (Services)</a></li>
+      <li><a href="apply.html" style="color:var(--primary); font-weight:800;"><i class="fa-solid fa-ticket"></i> 3. ऑनलाइन टोकन फॉर्म (Apply)</a></li>
+      <li><a href="contact.html"><i class="fa-solid fa-map-location-dot"></i> 4. संपर्क व लोकेशन (Contact)</a></li>
+      <li>
+        <a href="admin.html" style="color: #64748b; font-size: 11px;">
+          <i class="fa-solid fa-user-gear"></i> संचालक / एडमिन लॉगिन
+        </a>
+      </li>
+    </ul>
+
+    <div style="padding:14px; border-top:1px solid var(--border); display:flex; flex-direction:column; gap:8px;">
+      <a href="tel:9546565270" style="background:var(--bg); border:1px solid var(--border); color:var(--text); padding:9px; text-align:center; border-radius:8px; font-size:12px; font-weight:700; text-decoration:none;"><i class="fa-solid fa-phone"></i> 9546565270</a>
+      <a href="mailto:Rahul9117892261@gmail.com" style="background:var(--bg); border:1px solid var(--border); color:var(--text); padding:9px; text-align:center; border-radius:8px; font-size:12px; font-weight:700; text-decoration:none;"><i class="fa-solid fa-envelope"></i> ईमेल भेजें</a>
+      <a href="https://wa.me/919546565270?text=नमस्ते%20राहुल%20भैया" target="_blank" style="background:var(--wa); color:#fff; padding:9px; text-align:center; border-radius:8px; font-size:12px; font-weight:700; text-decoration:none;"><i class="fa-brands fa-whatsapp"></i> WhatsApp चैट</a>
+    </div>
+  </aside>
+
+  <!-- Main Apply Content -->
+  <main class="container" style="padding: 20px 0;">
+
+    <div class="card">
+      <span style="background:#dcfce7; color:#15803d; font-size:10px; font-weight:800; padding:3px 10px; border-radius:20px; display:inline-block; margin-bottom:8px;">ऑनलाइन टोकन डेस्क</span>
+      <h1 style="font-size:18px; font-weight:800; margin-bottom:4px;">घर बैठे सेवा अनुरोध व टोकन बुक करें</h1>
+      <p style="font-size:12px; color:var(--text-muted); margin-bottom:14px;">सेवाएँ चुनें, लाइव बिल देखें, तुरंत डिजिटल पर्ची प्राप्त करें और WhatsApp पर भेजें।</p>
+
+      <form id="tokenForm" onsubmit="submitToken(event)">
+        
+        <div style="margin-bottom:12px;">
+          <label style="display:block; font-size:11px; font-weight:700; margin-bottom:4px;">आवेदक का पूरा नाम *</label>
+          <input type="text" id="custName" required placeholder="अपना नाम लिखें" style="width:100%; padding:10px; border:1px solid var(--border); border-radius:8px; font-size:12px; background:var(--bg); color:var(--text); outline:none;">
+        </div>
+
+        <div style="margin-bottom:14px;">
+          <label style="display:block; font-size:11px; font-weight:700; margin-bottom:4px;">WhatsApp मोबाइल नंबर *</label>
+          <input type="tel" id="custPhone" required maxlength="10" pattern="[0-9]{10}" placeholder="10 अंकों का मोबाइल नंबर" oninput="this.value=this.value.replace(/[^0-9]/g,'')" style="width:100%; padding:10px; border:1px solid var(--border); border-radius:8px; font-size:12px; background:var(--bg); color:var(--text); outline:none;">
+        </div>
+
+        <!-- SERVICES -->
+        <div style="margin-bottom:14px;">
+          <label style="display:block; font-size:11px; font-weight:700; margin-bottom:4px;">
+            आवश्यक सेवाएँ चुनें (एक या अधिक पर टिक करें) *
+          </label>
+          
+          <div id="servicesContainer">
+            <div class="service-category-title"><i class="fa-solid fa-file-shield"></i> प्रमाण पत्र व पहचान दस्तावेज़</div>
+
+            <label class="service-item">
+              <input type="checkbox" name="serviceCheckbox" value="जाति प्रमाण पत्र" data-price="60" onchange="calculateTotal()">
+              <span class="srv-label">जाति प्रमाण पत्र (Caste Certificate)</span>
+              <span class="srv-price">₹60</span>
+            </label>
+
+            <label class="service-item">
+              <input type="checkbox" name="serviceCheckbox" value="आय प्रमाण पत्र" data-price="60" onchange="calculateTotal()">
+              <span class="srv-label">आय प्रमाण पत्र (Income Certificate)</span>
+              <span class="srv-price">₹60</span>
+            </label>
+
+            <label class="service-item">
+              <input type="checkbox" name="serviceCheckbox" value="निवास प्रमाण पत्र" data-price="60" onchange="calculateTotal()">
+              <span class="srv-label">निवास प्रमाण पत्र (Residential)</span>
+              <span class="srv-price">₹60</span>
+            </label>
+
+            <label class="service-item">
+              <input type="checkbox" name="serviceCheckbox" value="OBC / EWS प्रमाण पत्र" data-price="80" onchange="calculateTotal()">
+              <span class="srv-label">OBC / EWS प्रमाण पत्र</span>
+              <span class="srv-price">₹80</span>
+            </label>
+
+            <label class="service-item">
+              <input type="checkbox" name="serviceCheckbox" value="नया पैन कार्ड" data-price="130" onchange="calculateTotal()">
+              <span class="srv-label">नया पैन कार्ड (NSDL/UTI)</span>
+              <span class="srv-price">₹130</span>
+            </label>
+
+            <label class="service-item">
+              <input type="checkbox" name="serviceCheckbox" value="पैन कार्ड सुधार" data-price="120" onchange="calculateTotal()">
+              <span class="srv-label">पैन कार्ड में नाम / जन्मतिथि सुधार</span>
+              <span class="srv-price">₹120</span>
+            </label>
+
+            <label class="service-item">
+              <input type="checkbox" name="serviceCheckbox" value="नया वोटर आईडी कार्ड" data-price="60" onchange="calculateTotal()">
+              <span class="srv-label">नया वोटर कार्ड / सुधार (Voter ID)</span>
+              <span class="srv-price">₹60</span>
+            </label>
+
+            <label class="service-item">
+              <input type="checkbox" name="serviceCheckbox" value="आयुष्मान भारत कार्ड" data-price="50" onchange="calculateTotal()">
+              <span class="srv-label">आयुष्मान भारत कार्ड (₹5 लाख मुफ्त इलाज)</span>
+              <span class="srv-price">₹50</span>
+            </label>
+
+            <div class="service-category-title"><i class="fa-solid fa-graduation-cap"></i> ऑनलाइन फॉर्म व योजनाएँ</div>
+
+            <label class="service-item">
+              <input type="checkbox" name="serviceCheckbox" value="ऑनलाइन भर्ती परीक्षा फॉर्म" data-price="80" onchange="calculateTotal()">
+              <span class="srv-label">सरकारी नौकरी भर्ती फॉर्म (SSC/Railway/Police)</span>
+              <span class="srv-price">₹80</span>
+            </label>
+
+            <label class="service-item">
+              <input type="checkbox" name="serviceCheckbox" value="एडमिट कार्ड प्रिंट" data-price="20" onchange="calculateTotal()">
+              <span class="srv-label">परीक्षा एडमिट कार्ड डाउनलोड व प्रिंट</span>
+              <span class="srv-price">₹20</span>
+            </label>
+
+            <label class="service-item">
+              <input type="checkbox" name="serviceCheckbox" value="IGNOU एडमिशन / री-रजिस्ट्रेशन" data-price="100" onchange="calculateTotal()">
+              <span class="srv-label">IGNOU एडमिशन / फॉर्म</span>
+              <span class="srv-price">₹100</span>
+            </label>
+
+            <label class="service-item">
+              <input type="checkbox" name="serviceCheckbox" value="किसान पंजीकरण" data-price="50" onchange="calculateTotal()">
+              <span class="srv-label">किसान पंजीकरण / PM किसान e-KYC</span>
+              <span class="srv-price">₹50</span>
+            </label>
+
+            <label class="service-item">
+              <input type="checkbox" name="serviceCheckbox" value="वृद्धा / विधवा पेंशन KYC" data-price="50" onchange="calculateTotal()">
+              <span class="srv-label">वृद्धा / विधवा पेंशन ई-केवाईसी (KYC)</span>
+              <span class="srv-price">₹50</span>
+            </label>
+
+            <label class="service-item">
+              <input type="checkbox" name="serviceCheckbox" value="जमीन रसीद / दाखिल खारिज" data-price="60" onchange="calculateTotal()">
+              <span class="srv-label">ऑनलाइन जमीन रसीद / परिमार्जन</span>
+              <span class="srv-price">₹60</span>
+            </label>
+
+            <label class="service-item">
+              <input type="checkbox" name="serviceCheckbox" value="राशन कार्ड आवेदन" data-price="100" onchange="calculateTotal()">
+              <span class="srv-label">नया राशन कार्ड / नाम जोड़ना</span>
+              <span class="srv-price">₹100</span>
+            </label>
+
+            <div class="service-category-title"><i class="fa-solid fa-bolt"></i> बिल भुगतान, टिकटिंग व अन्य</div>
+
+            <label class="service-item">
+              <input type="checkbox" name="serviceCheckbox" value="बिजली बिल भुगतान" data-price="20" onchange="calculateTotal()">
+              <span class="srv-label">बिजली बिल भुगतान (तुरंत रसीद)</span>
+              <span class="srv-price">₹20</span>
+            </label>
+
+            <label class="service-item">
+              <input type="checkbox" name="serviceCheckbox" value="PF निकासी (Provident Fund)" data-price="150" onchange="calculateTotal()">
+              <span class="srv-label">PF निकासी ऑनलाइन क्लेम (UAN)</span>
+              <span class="srv-price">₹150</span>
+            </label>
+
+            <label class="service-item">
+              <input type="checkbox" name="serviceCheckbox" value="बस / हवाई टिकट बुकिंग" data-price="70" onchange="calculateTotal()">
+              <span class="srv-label">बस / हवाई जहाज टिकट बुकिंग</span>
+              <span class="srv-price">₹70</span>
+            </label>
+
+            <label class="service-item">
+              <input type="checkbox" name="serviceCheckbox" value="पासपोर्ट साइज फोटो" data-price="40" onchange="calculateTotal()">
+              <span class="srv-label">पासपोर्ट साइज फोटो (तत्काल)</span>
+              <span class="srv-price">₹40</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Live Total Box -->
+        <div id="costBox" style="background:rgba(37,99,235,0.08); border:1px solid var(--primary); border-radius:8px; padding:12px; margin-bottom:14px; display:flex; justify-content:space-between; align-items:center;">
+          <div>
+            <span style="font-weight:700; color:var(--text); font-size:12px;">कुल देय शुल्क:</span>
+            <div id="selectedCountText" style="font-size:10px; color:var(--text-muted);">कोई सेवा चयनित नहीं</div>
+          </div>
+          <span id="serviceCostText" style="font-size:18px; font-weight:800; color:var(--primary);">₹0</span>
+        </div>
+
+        <!-- Documents Required Checklist -->
+        <div style="background:var(--bg); border:1px dashed var(--primary); border-radius:8px; padding:12px; margin-bottom:14px; font-size:11px;">
+          <h5 style="font-weight:800; color:var(--primary); margin-bottom:6px;"><i class="fa-solid fa-paperclip"></i> आवश्यक मूल कागज़ात:</h5>
+          <ul id="formDocs" style="list-style:none; padding-left:0; margin:0;">
+            <li style="color:var(--text-muted);">कृपया ऊपर से कम से कम एक सेवा चुनें।</li>
+          </ul>
+        </div>
+
+        <!-- Payment Mode Selection -->
+        <div style="margin-bottom:14px;">
+          <label style="display:block; font-size:11px; font-weight:700; margin-bottom:6px;">भुगतान का माध्यम (Payment Mode) *</label>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+            <label style="display:flex; align-items:center; gap:6px; background:var(--bg); border:1px solid var(--border); padding:8px 10px; border-radius:8px; font-size:11px; font-weight:700; cursor:pointer;">
+              <input type="radio" name="payMode" value="दुकान पर नकद (Cash)" checked onchange="togglePayMode()"> दुकान पर नकद
+            </label>
+            <label style="display:flex; align-items:center; gap:6px; background:var(--bg); border:1px solid var(--border); padding:8px 10px; border-radius:8px; font-size:11px; font-weight:700; cursor:pointer;">
+              <input type="radio" name="payMode" value="ऑनलाइन QR कोड से भुगतान" onchange="togglePayMode()"> ऑनलाइन UPI / QR
+            </label>
+          </div>
+        </div>
+
+        <!-- QR Code & Multi-App UPI Section -->
+        <div id="qrPaymentSection" style="display:none; background:var(--bg); border:2px dashed var(--primary); border-radius:10px; padding:14px; margin-bottom:14px; text-align:center;">
+          <span style="background:#dcfce7; color:#15803d; font-size:9px; font-weight:800; padding:2px 8px; border-radius:10px; display:inline-block; margin-bottom:6px;">दुकान का आधिकारिक UPI पेमेंट</span>
+          <h4 style="font-size:14px; font-weight:800; margin-bottom:4px;">पसंदीदा UPI ऐप से तुरंत भुगतान करें</h4>
+          <p style="font-size:11px; color:var(--text-muted); margin-bottom:12px;">सटीक देय राशि: <strong id="qrPayAmountText" style="color:var(--primary); font-size:16px;">₹0</strong></p>
+
+          <!-- ALL UPI APPS OPTIONS -->
+          <div class="upi-apps-grid">
+            <button type="button" class="upi-app-btn btn-phonepe" onclick="payViaSpecificApp('phonepe')">
+              <i class="fa-solid fa-mobile-screen"></i> PhonePe
+            </button>
+            <button type="button" class="upi-app-btn btn-gpay" onclick="payViaSpecificApp('gpay')">
+              <i class="fa-brands fa-google-pay" style="font-size:16px;"></i> Google Pay
+            </button>
+            <button type="button" class="upi-app-btn btn-paytm" onclick="payViaSpecificApp('paytm')">
+              <i class="fa-solid fa-wallet"></i> Paytm
+            </button>
+            <button type="button" class="upi-app-btn btn-all-upi" onclick="payViaSpecificApp('generic')">
+              <i class="fa-solid fa-bolt"></i> सभी उपलब्ध UPI ऐप (BHIM/CRED/अन्य)
+            </button>
+          </div>
+
+          <div style="font-size:11px; font-weight:700; color:var(--text-muted); margin-bottom:10px;">— अथवा दूसरे फोन से QR स्कैन करें —</div>
+
+          <!-- DYNAMIC AUTO-GENERATED QR CODE -->
+          <div style="width:160px; height:160px; margin:0 auto 10px auto; background:#fff; padding:8px; border-radius:10px; border:1px solid var(--border); box-shadow:0 3px 10px rgba(0,0,0,0.06);">
+            <img id="dynamicQRImg" src="shop-qr.jpg" alt="Payment QR" style="width:100%; height:100%; object-fit:contain; display:block;" onerror="this.src='https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=upi://pay?pa=9546565270@ybl&pn=Rahul%20Online%20Centre'">
+          </div>
+
+          <div style="font-size:11px; color:var(--text); margin-bottom:12px;">
+            UPI ID: <strong id="applyUpiText">9546565270@ybl</strong>
+            <button type="button" onclick="copyApplyUPI()" style="background:var(--primary); color:#fff; border:none; padding:3px 7px; border-radius:4px; font-size:10px; font-weight:700; margin-left:6px; cursor:pointer;">कॉपी</button>
+          </div>
+
+          <!-- VERIFICATION MANDATORY NOTE -->
+          <div class="verify-notice-box">
+            <i class="fa-solid fa-shield-halved" style="color:#d97706;"></i> <strong>सुरक्षा निर्देश:</strong><br>
+            पेमेंट पूरा होने के बाद WhatsApp चैट पर भुगतान का <strong>स्क्रीनशॉट भेजना अनिवार्य</strong> है। स्क्रीनशॉट और खाते में राशि की पुष्टि होने पर ही टोकन स्वीकार किया जाएगा।
+          </div>
+        </div>
+
+        <div style="margin-bottom:14px;">
+          <label style="display:block; font-size:11px; font-weight:700; margin-bottom:4px;">विशेष नोट (वैकल्पिक)</label>
+          <textarea id="custNote" rows="2" placeholder="जैसे: तत्काल आवश्यकता है या अन्य कोई काम..." style="width:100%; padding:10px; border:1px solid var(--border); border-radius:8px; font-size:12px; background:var(--bg); color:var(--text); outline:none;"></textarea>
+        </div>
+
+        <!-- MAIN SUBMIT ACTION BUTTON -->
+        <button type="submit" id="mainSubmitBtn" class="submit-token-btn">
+          <i class="fa-brands fa-whatsapp"></i> <span>टोकन कार्ड जनरेट करें व WhatsApp भेजें</span>
+        </button>
+      </form>
+    </div>
+
+    <!-- Google Map GPS Section -->
+    <div class="card" style="margin-top:24px;">
+      <span style="background:#fee2e2; color:#dc2626; font-size:9px; font-weight:800; padding:2px 8px; border-radius:10px; display:inline-block; margin-bottom:6px;">सत्यापित लोकेशन</span>
+      <h2 style="font-size:17px; font-weight:800; margin-bottom:6px;">Rahul Online Centre, Jhajha</h2>
+      <p style="font-size:12px; color:var(--text); line-height:1.6; margin-bottom:14px;">
+        📍 <strong>पता:</strong> पाण्डेयडीह रोड, झाझा, जमुई, बिहार - <strong>811308</strong><br>
+        ⏰ <strong>समय:</strong> प्रतिदिन सुबह 8:00 AM से रात 8:00 PM तक खुला रहता है।
+      </p>
+
+      <a href="https://maps.app.goo.gl/mQUPjjVqzMn3nSbZ7" target="_blank" style="display:block; width:100%; background:var(--primary); color:#fff; text-decoration:none; padding:12px; border-radius:8px; font-size:13px; font-weight:800; text-align:center; margin-bottom:12px;">
+        <i class="fa-solid fa-diamond-turn-right"></i> गूगल मैप पर सटीक रास्ता खोलें
+      </a>
+
+      <div style="width:100%; height:240px; border-radius:8px; overflow:hidden; border:1px solid var(--border);">
+        <iframe 
+          src="https://maps.google.com/maps?q=Rahul+Online+Centre+Pandeydih+Rd+Jhajha+Bihar+811308&t=&z=16&ie=UTF8&iwloc=&output=embed" 
+          style="width:100%; height:100%; border:0;" 
+          loading="lazy">
+        </iframe>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- DIGITAL RECEIPT CARD MODAL -->
+  <div class="receipt-modal" id="receiptModal">
+    <div class="receipt-card" id="receiptPrintArea">
+      <div class="receipt-head">
+        <div style="font-size:11px; text-transform:uppercase; font-weight:800; color:var(--primary); letter-spacing:1px;">अधिकृत डिजिटल सेवा पर्ची</div>
+        <h3 style="font-size:17px; font-weight:800; margin:3px 0;">Rahul Online Centre (CSC)</h3>
+        <p style="font-size:11px; color:var(--text-muted); margin-bottom:8px;">पाण्डेयडीह रोड, झाझा (जमुई) • मो. 9546565270</p>
+        <div class="token-badge-number" id="cardTokenNum">ROC-XXXXXX</div>
+      </div>
+
+      <div style="margin-bottom:12px;">
+        <div class="receipt-row"><span>आवेदक का नाम:</span> <strong id="cardCustName">-</strong></div>
+        <div class="receipt-row"><span>मोबाइल नंबर:</span> <strong id="cardCustPhone">-</strong></div>
+        <div class="receipt-row"><span>तारीख व समय:</span> <strong id="cardDateTime">-</strong></div>
+        <div class="receipt-row"><span>भुगतान का माध्यम:</span> <strong id="cardPayMode">-</strong></div>
+        <div class="receipt-row"><span>सत्यापन स्थिति:</span> <strong id="cardPayStatus" style="color:#d97706;">स्क्रीनशॉट प्रतीक्षित</strong></div>
+      </div>
+
+      <div style="background:var(--bg); padding:10px 12px; border-radius:8px; border:1px solid var(--border); margin-bottom:12px;">
+        <div style="font-size:11px; font-weight:800; color:var(--primary); margin-bottom:4px;">📋 चुनी गई सेवाएँ:</div>
+        <div id="cardServiceList" style="font-size:11.5px; line-height:1.6;"></div>
+      </div>
+
+      <div style="display:flex; justify-content:space-between; align-items:center; background:rgba(37,99,235,0.08); padding:10px 14px; border-radius:8px; margin-bottom:12px;">
+        <span style="font-size:13px; font-weight:800;">कुल देय राशि:</span>
+        <span id="cardTotalBill" style="font-size:17px; font-weight:800; color:var(--primary);">₹0</span>
+      </div>
+
+      <p id="cardWarningFoot" style="font-size:10px; text-align:center; color:#dc2626; font-weight:700; margin-bottom:14px;">
+        ⚠️ ऑनलाइन भुगतान का स्क्रीनशॉट WhatsApp पर भेजना अनिवार्य है।
+      </p>
+
+      <div class="receipt-actions">
+        <button type="button" onclick="printReceipt()" style="flex:1; background:var(--primary); color:#fff; border:none; padding:10px; border-radius:8px; font-size:12px; font-weight:700; cursor:pointer;">
+          <i class="fa-solid fa-print"></i> पर्ची प्रिंट / सेव करें
+        </button>
+        <button type="button" class="close-receipt-btn" onclick="closeReceipt()" style="flex:1; background:var(--bg); border:1px solid var(--border); color:var(--text); padding:10px; border-radius:8px; font-size:12px; font-weight:700; cursor:pointer;">
+          बंद करें
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <h4>Rahul Online Centre</h4>
+      <p>पाण्डेयडीह रोड, झाझा, जमुई (811308)</p>
+      <p>📞 9546565270 | ✉️ Rahul9117892261@gmail.com</p>
+      <div style="font-size:10px; border-top:1px solid rgba(255,255,255,0.1); padding-top:10px; margin-top:12px;">© 2026 Rahul Online Centre. सर्वाधिकार सुरक्षित।</div>
+    </div>
+  </footer>
+
+  <a href="https://wa.me/919546565270" target="_blank" style="position:fixed; bottom:20px; right:20px; background:var(--wa); color:#fff; width:48px; height:48px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:24px; text-decoration:none; box-shadow:0 4px 12px rgba(22, 163, 74, 0.4); z-index:500;">
+    <i class="fa-brands fa-whatsapp"></i>
+  </a>
+
+  <script src="script.js"></script>
+
+  <script>
+    let globalTotal = 0;
+    let lastSubmitTime = 0;
+
+    // 1. Theme sync
+    const themeBtn = document.getElementById("themeBtn");
+    if (localStorage.getItem("roc_theme") === "dark") {
+      document.body.classList.add("dark-mode");
+      if (themeBtn) themeBtn.innerHTML = '<i class="fa-solid fa-sun"></i>';
+    }
+
+    if (themeBtn) {
+      themeBtn.onclick = function() {
+        document.body.classList.toggle("dark-mode");
+        const isDark = document.body.classList.contains("dark-mode");
+        localStorage.setItem("roc_theme", isDark ? "dark" : "light");
+        themeBtn.innerHTML = isDark ? '<i class="fa-solid fa-sun"></i>' : '<i class="fa-solid fa-moon"></i>';
+      };
+    }
+
+    // 2. Ticker & UPI sync
+    document.addEventListener("DOMContentLoaded", () => {
+      const savedTicker = localStorage.getItem("roc_ticker");
+      const tickerEl = document.getElementById("applyLiveTicker");
+      if (savedTicker && tickerEl) tickerEl.innerText = savedTicker;
+
+      const savedUPI = localStorage.getItem("roc_upi");
+      const upiEl = document.getElementById("applyUpiText");
+      if (savedUPI && upiEl) upiEl.innerText = savedUPI;
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const srvParam = urlParams.get("srv");
+      if(srvParam) {
+        const checkboxes = document.querySelectorAll('input[name="serviceCheckbox"]');
+        checkboxes.forEach(cb => {
+          if (cb.value === srvParam || srvParam.includes(cb.value)) {
+            cb.checked = true;
+          }
+        });
+        calculateTotal();
+      }
+    });
+
+    const docsMap = {
+      "जाति प्रमाण पत्र": ["पहचान प्रमाण पत्र (आधार कार्ड - दोनों तरफ)", "पासपोर्ट फोटो", "जाति व पिता का नाम"],
+      "आय प्रमाण पत्र": ["पहचान प्रमाण पत्र (आधार कार्ड)", "वार्षिक आय का विवरण"],
+      "निवास प्रमाण पत्र": ["पहचान प्रमाण पत्र (आधार कार्ड)", "गाँव व वार्ड संख्या"],
+      "OBC / EWS प्रमाण पत्र": ["जाति, आय व निवास प्रमाण पत्र", "पहचान प्रमाण पत्र", "खतियान/जमीन कागज़ात"],
+      "नया पैन कार्ड": ["पहचान प्रमाण पत्र (आधार कार्ड)", "2 पासपोर्ट फोटो", "हस्ताक्षर (Sign)"],
+      "पैन कार्ड सुधार": ["पुराना पैन कार्ड", "पहचान प्रमाण पत्र", "सही नाम/जन्मतिथि प्रमाण"],
+      "नया वोटर आईडी कार्ड": ["पहचान प्रमाण पत्र", "पासपोर्ट फोटो", "परिवार के किसी सदस्य का वोटर नंबर"],
+      "आयुष्मान भारत कार्ड": ["राशन कार्ड / PM-JAY लिस्ट", "पहचान प्रमाण पत्र"],
+      "ऑनलाइन भर्ती परीक्षा फॉर्म": ["10वीं/12वीं अंकतालिका", "फोटो व हस्ताक्षर", "जाति प्रमाण पत्र"],
+      "एडमिट कार्ड प्रिंट": ["रजिस्ट्रेशन नंबर / रोल नंबर", "जन्मतिथि / पासवर्ड"],
+      "IGNOU एडमिशन / री-रजिस्ट्रेशन": ["पिछली कक्षा की मार्कशीट", "फोटो व सिग्नेचर", "पहचान प्रमाण पत्र"],
+      "किसान पंजीकरण": ["पहचान प्रमाण पत्र (मोबाइल लिंक्ड)", "बैंक पासबुक", "जमीन की रसीद"],
+      "वृद्धा / विधवा पेंशन KYC": ["पहचान प्रमाण पत्र", "बैंक पासबुक", "पेंशन लाभार्थी संख्या"],
+      "जमीन रसीद / दाखिल खारिज": ["जमीन का खाता, खेसरा व जमाबंदी संख्या", "पिछली रसीद"],
+      "राशन कार्ड आवेदन": ["परिवार के सभी सदस्यों का पहचान प्रमाण पत्र", "संयुक्त फोटो", "बैंक पासबुक"],
+      "बिजली बिल भुगतान": ["उपभोक्ता संख्या (Consumer Number / CA Number)"],
+      "PF निकासी (Provident Fund)": ["UAN नंबर व पासवर्ड", "पहचान प्रमाण पत्र", "बैंक चेकबुक/पासबुक"],
+      "बस / हवाई टिकट बुकिंग": ["यात्री का नाम, उम्र", "पहचान पत्र", "यात्रा तिथि"],
+      "पासपोर्ट साइज फोटो": ["दुकान पर फोटो खींची जाएगी या साफ़ फोटो WhatsApp करें"]
+    };
+
+    function calculateTotal() {
+      const checkboxes = document.querySelectorAll('input[name="serviceCheckbox"]:checked');
+      let total = 0;
+      let selectedServices = [];
+      let combinedDocs = new Set();
+
+      checkboxes.forEach(cb => {
+        total += parseInt(cb.getAttribute("data-price") || 0);
+        selectedServices.push(cb.value);
+        cb.parentElement.classList.add("selected");
+
+        const docs = docsMap[cb.value] || [];
+        docs.forEach(d => combinedDocs.add(d));
+      });
+
+      document.querySelectorAll('input[name="serviceCheckbox"]:not(:checked)').forEach(cb => {
+        cb.parentElement.classList.remove("selected");
+      });
+
+      globalTotal = total;
+      document.getElementById("serviceCostText").innerText = "₹" + total;
+      const qrAmt = document.getElementById("qrPayAmountText");
+      if (qrAmt) qrAmt.innerText = "₹" + total;
+
+      const countEl = document.getElementById("selectedCountText");
+      if (selectedServices.length > 0) {
+        countEl.innerText = `${selectedServices.length} सेवाएँ चयनित`;
+      } else {
+        countEl.innerText = "कोई सेवा चयनित नहीं";
+      }
+
+      const ul = document.getElementById("formDocs");
+      ul.innerHTML = "";
+      if (combinedDocs.size > 0) {
+        combinedDocs.forEach(d => {
+          const li = document.createElement("li");
+          li.style.cssText = "margin-bottom:4px; display:flex; align-items:center; gap:6px;";
+          li.innerHTML = `<i class="fa-solid fa-circle-check" style="color:var(--wa);"></i> <span>${d}</span>`;
+          ul.appendChild(li);
+        });
+      } else {
+        ul.innerHTML = `<li style="color:var(--text-muted);">कृपया ऊपर से कम से कम एक सेवा चुनें।</li>`;
+      }
+
+      updateDynamicPaymentLink(total);
+    }
+
+    function updateDynamicPaymentLink(amount) {
+      const upiId = document.getElementById("applyUpiText").innerText.trim();
+      const upiURL = `upi://pay?pa=${upiId}&pn=Rahul%20Online%20Centre&am=${amount}&cu=INR&tn=ROC_Online_Token`;
+      
+      const qrImg = document.getElementById("dynamicQRImg");
+      if (amount > 0) {
+        qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(upiURL)}`;
+      } else {
+        qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=upi://pay?pa=${upiId}&pn=Rahul%20Online%20Centre`;
+      }
+    }
+
+    function togglePayMode() {
+      const payModes = document.getElementsByName("payMode");
+      let selectedMode = "";
+      for (let r of payModes) {
+        if (r.checked) selectedMode = r.value;
+      }
+
+      const qrBox = document.getElementById("qrPaymentSection");
+      if (selectedMode.includes("ऑनलाइन QR")) {
+        qrBox.style.display = "block";
+        qrBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      } else {
+        qrBox.style.display = "none";
+      }
+    }
+
+    // MULTI-APP UPI DIRECT CALLER
+    function payViaSpecificApp(appType) {
+      if (globalTotal <= 0) {
+        alert("⚠️ कृपया पहले ऊपर से कम से कम एक सेवा का चयन करें!");
+        return;
+      }
+
+      const upiId = document.getElementById("applyUpiText").innerText.trim();
+      let intentURL = "";
+
+      if (appType === 'phonepe') {
+        // Direct PhonePe Intent
+        intentURL = `phonepe://pay?pa=${upiId}&pn=Rahul%20Online%20Centre&am=${globalTotal}&cu=INR&tn=ROC_Token`;
+      } else if (appType === 'gpay') {
+        // Direct Google Pay Intent
+        intentURL = `tez://upi/pay?pa=${upiId}&pn=Rahul%20Online%20Centre&am=${globalTotal}&cu=INR&tn=ROC_Token`;
+      } else if (appType === 'paytm') {
+        // Direct Paytm Intent
+        intentURL = `paytmmp://pay?pa=${upiId}&pn=Rahul%20Online%20Centre&am=${globalTotal}&cu=INR&tn=ROC_Token`;
+      } else {
+        // Standard Android Generic UPI Chooser (Shows all UPI Apps)
+        intentURL = `upi://pay?pa=${upiId}&pn=Rahul%20Online%20Centre&am=${globalTotal}&cu=INR&tn=ROC_Token`;
+      }
+
+      window.location.href = intentURL;
+    }
+
+    function copyApplyUPI() {
+      const upi = document.getElementById("applyUpiText").innerText;
+      navigator.clipboard.writeText(upi);
+      alert("✓ UPI ID कॉपी हो गया: " + upi);
+    }
+
+    function generateNextToken() {
+      const now = new Date();
+      const year = String(now.getFullYear()).slice(-2);
+      const month = String(now.getMonth() + 1).padStart(2, '0');
+      const day = String(now.getDate()).padStart(2, '0');
+      const datePart = `${year}${month}${day}`;
+
+      const timePart = String(now.getHours()).padStart(2, '0') + 
+                       String(now.getMinutes()).padStart(2, '0') + 
+                       String(now.getSeconds()).padStart(2, '0');
+      
+      const randomPart = Math.floor(100 + Math.random() * 900);
+      return `ROC-${datePart}-${timePart}${randomPart}`;
+    }
+
+    function submitToken(e) {
+      e.preventDefault();
+
+      // Anti-spam 30s lock
+      const currentTime = Date.now();
+      if (currentTime - lastSubmitTime < 30000) {
+        alert("⚠️ कृपया प्रतीक्षा करें! आप 30 सेकंड में केवल एक बार ही टोकन सबमिट कर सकते हैं।");
+        return;
+      }
+
+      const name = document.getElementById("custName").value.trim();
+      const phone = document.getElementById("custPhone").value.trim();
+      const checkedBoxes = document.querySelectorAll('input[name="serviceCheckbox"]:checked');
+
+      if (checkedBoxes.length === 0) {
+        alert("कृपया कम से कम एक सेवा का चयन अवश्य करें!");
+        return;
+      }
+
+      const payModes = document.getElementsByName("payMode");
+      let selectedMode = "दुकान पर नकद (Cash)";
+      for (let r of payModes) {
+        if (r.checked) selectedMode = r.value;
+      }
+
+      let serviceListText = "";
+      let serviceListHTML = "";
+      let totalAmount = 0;
+
+      checkedBoxes.forEach((cb, idx) => {
+        const price = cb.getAttribute("data-price");
+        totalAmount += parseInt(price);
+        serviceListText += `  ${idx + 1}. ${cb.value} (₹${price})\n`;
+        serviceListHTML += `<div style="margin-bottom:3px;">• ${cb.value} - <strong>₹${price}</strong></div>`;
+      });
+
+      const note = document.getElementById("custNote").value.trim() || "कोई विशेष निर्देश नहीं";
+
+      const uniqueToken = generateNextToken();
+      const now = new Date();
+      const formattedDate = now.toLocaleDateString("hi-IN") + ", " + now.toLocaleTimeString("hi-IN", { hour: '2-digit', minute: '2-digit' });
+
+      document.getElementById("cardTokenNum").innerText = uniqueToken;
+      document.getElementById("cardCustName").innerText = name;
+      document.getElementById("cardCustPhone").innerText = phone;
+      document.getElementById("cardDateTime").innerText = formattedDate;
+      document.getElementById("cardPayMode").innerText = selectedMode;
+      
+      const statusEl = document.getElementById("cardPayStatus");
+      const warningEl = document.getElementById("cardWarningFoot");
+
+      if (selectedMode.includes("ऑनलाइन QR")) {
+        statusEl.innerText = "स्क्रीनशॉट प्रतीक्षित";
+        statusEl.style.color = "#d97706";
+        warningEl.style.display = "block";
+        warningEl.innerText = "⚠️ ऑनलाइन भुगतान का स्क्रीनशॉट WhatsApp पर भेजना अनिवार्य है।";
+      } else {
+        statusEl.innerText = "दुकान पर नकद देय";
+        statusEl.style.color = "#2563eb";
+        warningEl.style.display = "block";
+        warningEl.innerText = "📌 दुकान पर आकर नकद भुगतान करें और सेवा प्राप्त करें।";
+      }
+
+      document.getElementById("cardServiceList").innerHTML = serviceListHTML;
+      document.getElementById("cardTotalBill").innerText = "₹" + totalAmount;
+
+      document.getElementById("receiptModal").style.display = "flex";
+      lastSubmitTime = currentTime;
+
+      // STRICT WHATSAPP SECURITY PAYLOAD
+      let msg = `*नमस्ते राहुल भैया (Rahul Online Centre)* 🙏\n\n`;
+      msg += `🎟️ *टोकन नंबर:* ${uniqueToken}\n`;
+      msg += `👤 *ग्राहक का नाम:* ${name}\n`;
+      msg += `📱 *मोबाइल नंबर:* ${phone}\n\n`;
+      msg += `📋 *अनुरोधित सेवाएँ:*\n${serviceListText}\n`;
+      msg += `💰 *कुल देय राशि:* ₹${totalAmount}\n`;
+      msg += `💳 *भुगतान माध्यम:* ${selectedMode}\n`;
+
+      if (selectedMode.includes("ऑनलाइन QR")) {
+        msg += `\n⚠️ *सत्यापन चेतावनी:* ग्राहक ने ऑनलाइन UPI चुना है। कृपया PhonePe/बैंक खाते में राशि चेक करें तथा भुगतान का स्क्रीनशॉट मिलने के बाद ही कार्य प्रारंभ करें।\n`;
+      } else {
+        msg += `\n📌 *नोट:* ग्राहक दुकान पर आकर नकद भुगतान करेगा।\n`;
+      }
+
+      msg += `📝 *विशेष निर्देश:* ${note}\n\n`;
+      msg += `(यह संदेश Rahul Online Centre की आधिकारिक वेबसाइट से जनरेट किया गया है)`;
+
+      window.open(`https://wa.me/919546565270?text=${encodeURIComponent(msg)}`, "_blank");
+    }
+
+    function printReceipt() {
+      window.print();
+    }
+
+    function closeReceipt() {
+      document.getElementById("receiptModal").style.display = "none";
+    }
+  </script>
+
+</body>
+</html>

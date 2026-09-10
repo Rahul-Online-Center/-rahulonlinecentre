@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>संपर्क व सटीक लोकेशन - Rahul Online Centre</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Top Live Strip -->
+  <div class="top-bar">
+    <div class="container" style="display:flex; align-items:center; gap:8px;">
+      <span style="background:#e11d48; color:#fff; font-size:9px; font-weight:800; padding:2px 6px; border-radius:3px;">LIVE</span>
+      <marquee behavior="scroll" direction="left" scrollamount="5">
+        📢 दुकान का समय: सुबह 8:00 AM से रात 8:00 PM तक • सीधा संपर्क: 9546565270 • ईमेल: Rahul9117892261@gmail.com
+      </marquee>
+    </div>
+  </div>
+
+  <!-- Header Navbar with 3-Line Menu Button -->
+  <header class="navbar">
+    <div class="container nav-flex">
+      <a href="index.html" class="brand">
+        <div class="brand-icon"><i class="fa-solid fa-laptop-code"></i></div>
+        <div>
+          <div class="brand-title">Rahul Online Centre(CSC)</div>
+          <div class="brand-sub">पाण्डेयडीह रोड, झाझा (जमुई)</div>
+        </div>
+      </a>
+
+      <div class="nav-btns">
+        <button class="btn-icon" id="themeBtn" title="डार्क/लाइट मोड"><i class="fa-solid fa-moon"></i></button>
+        <button class="btn-icon" id="menuBtn" title="मेनू"><i class="fa-solid fa-bars"></i></button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Side Navigation Drawer -->
+  <div class="drawer-overlay" id="overlay"></div>
+  <aside class="drawer" id="drawer">
+    <div class="drawer-head">
+      <div>
+        <h3>Rahul Online Centre</h3>
+        <p style="font-size: 11px; color:#94a3b8;">पाण्डेयडीह रोड, झाझा (811308)</p>
+      </div>
+      <button id="closeDrawer" style="background:none; border:none; color:#fff; font-size:24px; cursor:pointer;">&times;</button>
+    </div>
+
+    <ul class="drawer-menu">
+      <div style="font-size:10px; text-transform:uppercase; font-weight:800; color:var(--text-muted); padding:10px 16px 4px 16px;">मुख्य नेविगेशन</div>
+      <li><a href="index.html"><i class="fa-solid fa-house"></i> 1. होम पेज (Home)</a></li>
+      <li><a href="services.html"><i class="fa-solid fa-list-check"></i> 2. सेवाएँ व दस्तावेज़ (Services)</a></li>
+      <li><a href="apply.html"><i class="fa-solid fa-ticket"></i> 3. ऑनलाइन टोकन (Apply)</a></li>
+      <li><a href="contact.html" style="color:var(--primary); font-weight:800;"><i class="fa-solid fa-map-location-dot"></i> 4. संपर्क व लोकेशन (Contact)</a></li>
+    </ul>
+
+    <div style="padding:14px; border-top:1px solid var(--border); display:flex; flex-direction:column; gap:8px;">
+      <a href="tel:9546565270" style="background:var(--bg); border:1px solid var(--border); color:var(--text); padding:9px; text-align:center; border-radius:8px; font-size:12px; font-weight:700; text-decoration:none;"><i class="fa-solid fa-phone"></i> 9546565270</a>
+      <a href="mailto:Rahul9117892261@gmail.com" style="background:var(--bg); border:1px solid var(--border); color:var(--text); padding:9px; text-align:center; border-radius:8px; font-size:12px; font-weight:700; text-decoration:none;"><i class="fa-solid fa-envelope"></i> ईमेल भेजें</a>
+      <a href="https://wa.me/919546565270?text=नमस्ते%20राहुल%20भैया" target="_blank" style="background:var(--wa); color:#fff; padding:9px; text-align:center; border-radius:8px; font-size:12px; font-weight:700; text-decoration:none;"><i class="fa-brands fa-whatsapp"></i> WhatsApp चैट</a>
+    </div>
+  </aside>
+
+  <!-- Main Contact Content -->
+  <main class="container" style="padding: 20px 0;">
+
+    <div style="text-align:center; margin-bottom:16px;">
+      <span style="background:#fee2e2; color:#dc2626; font-size:10px; font-weight:800; padding:3px 10px; border-radius:20px; display:inline-block; margin-bottom:6px;">CONTACT & LOCATION</span>
+      <h1 style="font-size:20px; font-weight:800;">संपर्क सूत्र एवं सटीक पता</h1>
+      <p style="font-size:12px; color:var(--text-muted); margin-top:2px;">दुकान के समय, ईमेल और गूगल मैप लोकेशन की पूरी जानकारी</p>
+    </div>
+
+    <!-- Store Timing & Status Card -->
+    <div class="card" style="border-left: 4px solid var(--primary);">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+        <h3 style="font-size:15px; font-weight:800;"><i class="fa-regular fa-clock" style="color:var(--primary);"></i> दुकान खुलने और बंद होने का समय</h3>
+        <span id="storeStatusBadge" style="font-size:10px; font-weight:800; padding:3px 8px; border-radius:12px;">चेक हो रहा है...</span>
+      </div>
+      <p style="font-size:13px; font-weight:700; color:var(--text); margin-bottom:4px;">प्रतिदिन सुबह 8:00 AM से रात 8:00 PM तक</p>
+      <p style="font-size:11px; color:var(--text-muted);">सोमवार से रविवार (सातों दिन सेंटर खुला रहता है)</p>
+    </div>
+
+    <!-- Verified Full Address Card -->
+    <div class="card">
+      <span style="background:#dbeafe; color:var(--primary); font-size:10px; font-weight:800; padding:3px 10px; border-radius:20px; display:inline-block; margin-bottom:8px;">सत्यापित आधार पता</span>
+      <h2 style="font-size:17px; font-weight:800; margin-bottom:6px;">Rahul Online Centre</h2>
+      <p style="font-size:13px; color:var(--text); line-height:1.7; margin-bottom:14px;">
+        📍 <strong>प्रोपराइटर:</strong> राहुल कुमार पंडित<br>
+        🏠 <strong>स्थान/रोड:</strong> पाण्डेयडीह रोड (Pandeydih Rd)<br>
+        📮 <strong>पोस्ट एवं थाना:</strong> झाझा (Jhajha)<br>
+        🏛️ <strong>जिला एवं राज्य:</strong> जमुई, बिहार - पिन कोड: <strong>811308</strong>
+      </p>
+
+      <!-- Direct Action Buttons -->
+      <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:14px;">
+        <a href="tel:9546565270" style="background:var(--bg); border:1px solid var(--border); color:var(--text); padding:11px; border-radius:8px; font-size:13px; font-weight:700; text-decoration:none; display:flex; align-items:center; gap:10px;">
+          <i class="fa-solid fa-phone" style="color:var(--primary); font-size:16px;"></i>
+          <div>
+            <div style="font-size:10px; color:var(--text-muted);">कॉल करें (Call Now)</div>
+            <div style="font-size:14px; font-weight:800;">9546565270</div>
+          </div>
+        </a>
+
+        <a href="mailto:Rahul9117892261@gmail.com?subject=Inquiry%20from%20Website&body=नमस्ते%20राहुल%20भैया," style="background:var(--bg); border:1px solid var(--border); color:var(--text); padding:11px; border-radius:8px; font-size:13px; font-weight:700; text-decoration:none; display:flex; align-items:center; gap:10px;">
+          <i class="fa-solid fa-envelope" style="color:#ea580c; font-size:16px;"></i>
+          <div>
+            <div style="font-size:10px; color:var(--text-muted);">ईमेल भेजें (Click to Email)</div>
+            <div style="font-size:13px; font-weight:800; word-break:break-all;">Rahul9117892261@gmail.com</div>
+          </div>
+        </a>
+
+        <a href="https://wa.me/919546565270?text=नमस्ते%20राहुल%20भैया,%20मुझे%20दुकान%20का%20पता%20पूछना%20है।" target="_blank" style="background:var(--wa); color:#fff; padding:11px; border-radius:8px; font-size:13px; font-weight:700; text-decoration:none; display:flex; align-items:center; gap:10px;">
+          <i class="fa-brands fa-whatsapp" style="font-size:18px;"></i>
+          <div>
+            <div style="font-size:10px; color:#dcfce7;">WhatsApp चैट</div>
+            <div style="font-size:14px; font-weight:800;">9546565270</div>
+          </div>
+        </a>
+      </div>
+
+      <!-- Exact Map Link -->
+      <a href="https://maps.app.goo.gl/mQUPjjVqzMn3nSbZ7" target="_blank" style="display:block; width:100%; background:var(--primary); color:#fff; text-decoration:none; padding:12px; border-radius:8px; font-size:13px; font-weight:800; text-align:center; margin-bottom:12px;">
+        <i class="fa-solid fa-diamond-turn-right"></i> गूगल मैप पर सटीक नेविगेशन चालू करें
+      </a>
+
+      <div style="width:100%; height:260px; border-radius:8px; overflow:hidden; border:1px solid var(--border);">
+        <iframe 
+          src="https://maps.google.com/maps?q=Rahul+Online+Centre+Pandeydih+Rd+Jhajha+Bihar+811308&t=&z=16&ie=UTF8&iwloc=&output=embed" 
+          style="width:100%; height:100%; border:0;" 
+          loading="lazy">
+        </iframe>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <h4>Rahul Online Centre</h4>
+      <p>पाण्डेयडीह रोड, झाझा, जमुई (811308)</p>
+      <p>📞 9546565270 | ✉️ Rahul9117892261@gmail.com</p>
+      <div style="font-size:10px; border-top:1px solid rgba(255,255,255,0.1); padding-top:10px; margin-top:12px;">© 2026 Rahul Online Centre. सर्वाधिकार सुरक्षित।</div>
+    </div>
+  </footer>
+
+  <a href="https://wa.me/919546565270" target="_blank" style="position:fixed; bottom:20px; right:20px; background:var(--wa); color:#fff; width:48px; height:48px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:24px; text-decoration:none; box-shadow:0 4px 12px rgba(22, 163, 74, 0.4); z-index:500;">
+    <i class="fa-brands fa-whatsapp"></i>
+  </a>
+
+  <!-- Script Engine -->
+  <script src="script.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const badge = document.getElementById("storeStatusBadge");
+      if (!badge) return;
+      const currentHour = new Date().getHours();
+      if (currentHour >= 8 && currentHour < 20) {
+        badge.innerText = "● अभी खुली है (Open)";
+        badge.style.background = "#dcfce7";
+        badge.style.color = "#15803d";
+      } else {
+        badge.innerText = "● अभी बंद है (Closed)";
+        badge.style.background = "#fee2e2";
+        badge.style.color = "#dc2626";
+      }
+    });
+  </script>
+  <script>
+  // डायरेक्ट बटन क्लिक टेस्ट
+  document.getElementById("themeBtn").onclick = function() {
+    document.body.classList.toggle("dark-mode");
+  };
+</script>
+
+</body>
+</html>

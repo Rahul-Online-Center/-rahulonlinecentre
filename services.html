@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>सेवाएँ एवं आवश्यक दस्तावेज़ - Rahul Online Centre</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Top Live Strip -->
+  <div class="top-bar">
+    <div class="container" style="display:flex; align-items:center; gap:8px;">
+      <span style="background:#e11d48; color:#fff; font-size:9px; font-weight:800; padding:2px 6px; border-radius:3px;">LIVE</span>
+      <marquee behavior="scroll" direction="left" scrollamount="5">
+        📢 किसी भी सेवा के लिए आवश्यक मूल कागज़ात जानने हेतु कार्ड पर 'दस्तावेज़ देखें' पर क्लिक करें • ऑनलाइन टोकन भेजने के लिए 'आवेदन करें' दबाएं
+      </marquee>
+    </div>
+  </div>
+
+  <!-- Header Navbar with Theme & 3-Line Menu Buttons -->
+  <header class="navbar">
+    <div class="container nav-flex">
+      <a href="index.html" class="brand">
+        <div class="brand-icon"><i class="fa-solid fa-laptop-code"></i></div>
+        <div>
+          <div class="brand-title">Rahul Online Centre(CSC)</div>
+          <div class="brand-sub">पाण्डेयडीह रोड, झाझा (जमुई)</div>
+        </div>
+      </a>
+
+      <div class="nav-btns">
+        <button class="btn-icon" id="themeBtn" title="डार्क/लाइट मोड"><i class="fa-solid fa-moon"></i></button>
+        <button class="btn-icon" id="menuBtn" title="मेनू"><i class="fa-solid fa-bars"></i></button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Side Navigation Drawer -->
+  <div class="drawer-overlay" id="overlay"></div>
+  <aside class="drawer" id="drawer">
+    <div class="drawer-head">
+      <div>
+        <h3>Rahul Online Centre</h3>
+        <p style="font-size: 11px; color:#94a3b8;">पाण्डेयडीह रोड, झाझा (811308)</p>
+      </div>
+      <button id="closeDrawer" style="background:none; border:none; color:#fff; font-size:24px; cursor:pointer;">&times;</button>
+    </div>
+
+    <ul class="drawer-menu">
+      <div style="font-size:10px; text-transform:uppercase; font-weight:800; color:var(--text-muted); padding:10px 16px 4px 16px;">मुख्य नेविगेशन</div>
+      <li><a href="index.html"><i class="fa-solid fa-house"></i> 1. होम पेज (Home)</a></li>
+      <li><a href="services.html" style="color:var(--primary); font-weight:800;"><i class="fa-solid fa-list-check"></i> 2. सेवाएँ व दस्तावेज़ (Services)</a></li>
+      <li><a href="apply.html"><i class="fa-solid fa-ticket"></i> 3. ऑनलाइन टोकन फॉर्म (Apply)</a></li>
+      <li><a href="contact.html"><i class="fa-solid fa-map-location-dot"></i> 4. संपर्क व लोकेशन (Contact)</a></li>
+
+      <div style="font-size:10px; text-transform:uppercase; font-weight:800; color:var(--text-muted); padding:10px 16px 4px 16px;">त्वरित सेवा चयन</div>
+      <li><a href="apply.html?srv=जाति प्रमाण पत्र"><i class="fa-solid fa-file-shield"></i> जाति प्रमाण पत्र</a></li>
+      <li><a href="apply.html?srv=आय प्रमाण पत्र"><i class="fa-solid fa-file-invoice-dollar"></i> आय प्रमाण पत्र</a></li>
+      <li><a href="apply.html?srv=निवास प्रमाण पत्र"><i class="fa-solid fa-house-user"></i> निवास प्रमाण पत्र</a></li>
+      <li><a href="apply.html?srv=नया पैन कार्ड"><i class="fa-solid fa-id-card"></i> नया पैन कार्ड</a></li>
+      <li><a href="apply.html?srv=सरकारी भर्ती परीक्षा फॉर्म"><i class="fa-solid fa-graduation-cap"></i> प्रतियोगी परीक्षा फॉर्म</a></li>
+    </ul>
+
+    <div style="padding:14px; border-top:1px solid var(--border); display:flex; flex-direction:column; gap:8px;">
+      <a href="tel:9546565270" style="background:var(--bg); border:1px solid var(--border); color:var(--text); padding:9px; text-align:center; border-radius:8px; font-size:12px; font-weight:700; text-decoration:none;"><i class="fa-solid fa-phone"></i> 9546565270</a>
+      <a href="mailto:Rahul9117892261@gmail.com" style="background:var(--bg); border:1px solid var(--border); color:var(--text); padding:9px; text-align:center; border-radius:8px; font-size:12px; font-weight:700; text-decoration:none;"><i class="fa-solid fa-envelope"></i> ईमेल भेजें</a>
+      <a href="https://wa.me/919546565270?text=नमस्ते%20राहुल%20भैया" target="_blank" style="background:var(--wa); color:#fff; padding:9px; text-align:center; border-radius:8px; font-size:12px; font-weight:700; text-decoration:none;"><i class="fa-brands fa-whatsapp"></i> WhatsApp चैट</a>
+    </div>
+  </aside>
+
+  <!-- Live Time & Address Quick Banner -->
+  <div style="background:var(--card-bg); border-bottom:1px solid var(--border); padding:8px 0; font-size:11px;">
+    <div class="container" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
+      <div style="display:flex; align-items:center; gap:6px; color:var(--text);">
+        <i class="fa-regular fa-clock" style="color:var(--primary);"></i>
+        <span><strong>समय:</strong> सुबह 8:00 AM से रात 8:00 PM (सातों दिन खुला)</span>
+      </div>
+      <span id="serviceStoreStatus" style="font-size:10px; font-weight:800; padding:2px 8px; border-radius:10px; background:#dcfce7; color:#15803d;">● अभी खुली है (Open)</span>
+    </div>
+  </div>
+
+  <!-- Main Services Content -->
+  <main class="container" style="padding: 20px 0;">
+
+    <div style="text-align:center; margin-bottom:16px;">
+      <span style="background:var(--primary); color:#fff; font-size:10px; font-weight:800; padding:3px 10px; border-radius:20px; display:inline-block; margin-bottom:6px;">DIRECTORY</span>
+      <h1 style="font-size:20px; font-weight:800;">सेवाएँ एवं आवश्यक कागज़ात</h1>
+      <p style="font-size:12px; color:var(--text-muted); margin-top:2px;">ज़रूरी दस्तावेज़ देखने के लिए कार्ड पर क्लिक करें</p>
+    </div>
+
+    <!-- Live Search Bar -->
+    <div style="background:var(--card-bg); border:1px solid var(--border); border-radius:12px; padding:8px 12px; display:flex; align-items:center; gap:8px; margin-bottom:14px;">
+      <i class="fa-solid fa-magnifying-glass" style="color:var(--text-muted);"></i>
+      <input type="text" id="serviceSearchInput" placeholder="सेवा खोजें (उदा. जाति, आय, पैन, राशन, जॉब)..." style="border:none; outline:none; width:100%; font-size:13px; background:transparent; color:var(--text);">
+    </div>
+
+    <!-- Category Filter Tabs -->
+    <div style="display:flex; gap:6px; overflow-x:auto; padding-bottom:8px; margin-bottom:16px; scrollbar-width:none;">
+      <button class="tab-btn active" onclick="filterCat('all', this)" style="background:var(--primary); color:#fff; border:1px solid var(--border); padding:6px 14px; border-radius:20px; font-size:11px; font-weight:600; white-space:nowrap; cursor:pointer;">सभी सेवाएँ</button>
+      <button class="tab-btn" onclick="filterCat('certificates', this)" style="background:var(--card-bg); border:1px solid var(--border); padding:6px 14px; border-radius:20px; font-size:11px; font-weight:600; color:var(--text-muted); white-space:nowrap; cursor:pointer;">प्रमाण पत्र (RTPS)</button>
+      <button class="tab-btn" onclick="filterCat('pan', this)" style="background:var(--card-bg); border:1px solid var(--border); padding:6px 14px; border-radius:20px; font-size:11px; font-weight:600; color:var(--text-muted); white-space:nowrap; cursor:pointer;">पैन कार्ड</button>
+      <button class="tab-btn" onclick="filterCat('banking', this)" style="background:var(--card-bg); border:1px solid var(--border); padding:6px 14px; border-radius:20px; font-size:11px; font-weight:600; color:var(--text-muted); white-space:nowrap; cursor:pointer;">बैंकिंग (AEPS)</button>
+      <button class="tab-btn" onclick="filterCat('jobs', this)" style="background:var(--card-bg); border:1px solid var(--border); padding:6px 14px; border-radius:20px; font-size:11px; font-weight:600; color:var(--text-muted); white-space:nowrap; cursor:pointer;">जॉब्स फॉर्म</button>
+    </div>
+
+    <!-- Services Cards Grid -->
+    <div id="servicesContainer" style="display:flex; flex-direction:column; gap:12px;"></div>
+
+  </main>
+
+  <!-- Document Popup Modal -->
+  <div class="modal-overlay" id="docModal">
+    <div class="modal-card" style="background:var(--card-bg); border-radius:14px; width:90%; max-width:400px; padding:20px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border); padding-bottom:8px; margin-bottom:10px;">
+        <h4 id="modalTitle" style="font-size:15px; font-weight:800;">सेवा विवरण</h4>
+        <button onclick="closeModal()" style="background:none; border:none; font-size:22px; color:var(--text-muted); cursor:pointer;">&times;</button>
+      </div>
+      <p style="font-size:11px; color:var(--text-muted); margin-bottom:8px;">आवश्यक मूल कागज़ात:</p>
+      <ul id="modalList" style="list-style:none; margin-bottom:14px;"></ul>
+      <a href="apply.html" id="modalApplyBtn" style="display:block; width:100%; background:var(--wa); color:#fff; text-decoration:none; padding:10px; border-radius:8px; font-size:12px; font-weight:700; text-align:center;">
+        <i class="fa-solid fa-paper-plane"></i> ऑनलाइन टोकन भेजें
+      </a>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <h4>Rahul Online Centre</h4>
+      <p>पाण्डेयडीह रोड, झाझा, जमुई (811308)</p>
+      <p>📞 9546565270 | ✉️ Rahul9117892261@gmail.com</p>
+      <div style="font-size:10px; border-top:1px solid rgba(255,255,255,0.1); padding-top:10px; margin-top:12px;">© 2026 Rahul Online Centre. सर्वाधिकार सुरक्षित।</div>
+    </div>
+  </footer>
+
+  <a href="https://wa.me/919546565270" target="_blank" style="position:fixed; bottom:20px; right:20px; background:var(--wa); color:#fff; width:48px; height:48px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:24px; text-decoration:none; box-shadow:0 4px 12px rgba(22, 163, 74, 0.4); z-index:500;">
+    <i class="fa-brands fa-whatsapp"></i>
+  </a>
+
+  <!-- Script Engine -->
+  <script src="script.js"></script>
+  <script>
+    const servicesDB = [
+      { cat: "certificates", title: "जाति प्रमाण पत्र (Caste)", desc: "बिहार RTPS पोर्टल द्वारा अधिकृत जाति प्रमाण पत्र।", docs: ["पहचान प्रमाण पत्र (आधार कार्ड - दोनों तरफ)", "पासपोर्ट साइज़ फ़ोटो", "जाति व पिता का नाम", "मोबाइल नंबर (OTP हेतु)"], icon: "fa-file-shield", bg: "#eff6ff", color: "#1d4ed8" },
+      { cat: "certificates", title: "आय प्रमाण पत्र (Income)", desc: "छात्रवृत्ति, दाखिले व योजनाओं हेतु वैध आय प्रमाण पत्र।", docs: ["पहचान प्रमाण पत्र (आधार कार्ड)", "पासपोर्ट साइज़ फ़ोटो", "वार्षिक आय का विवरण", "मोबाइल नंबर"], icon: "fa-file-invoice-dollar", bg: "#ecfdf5", color: "#059669" },
+      { cat: "certificates", title: "निवास प्रमाण पत्र (Residential)", desc: "स्थायी पते के आधिकारिक सत्यापन हेतु आवेदन।", docs: ["पहचान प्रमाण पत्र (आधार कार्ड)", "पासपोर्ट साइज़ फ़ोटो", "गाँव व वार्ड संख्या", "मोबाइल नंबर"], icon: "fa-house-user", bg: "#fefce8", color: "#ca8a04" },
+      { cat: "pan", title: "नया पैन कार्ड (NSDL/UTI)", desc: "3 दिन में e-PAN, मूल कार्ड सीधे घर पर।", docs: ["पहचान प्रमाण पत्र (आधार कार्ड)", "2 पासपोर्ट फ़ोटो", "काली स्याही से हस्ताक्षर", "मोबाइल नंबर"], icon: "fa-id-card", bg: "#f0fdf4", color: "#16a34a" },
+      { cat: "pan", title: "पैन कार्ड सुधार / डुप्लीकेट", desc: "नाम, जन्मतिथि अथवा पिता का नाम सुधार।", docs: ["पुराना पैन नंबर/कॉपी", "पहचान प्रमाण पत्र (आधार कार्ड)", "सुधार से संबंधित कागज़ात"], icon: "fa-pen-to-square", bg: "#f5f3ff", color: "#7c3aed" },
+      { cat: "banking", title: "नकद निकासी सुविधा (AEPS)", desc: "किसी भी बैंक खाते से फिंगरप्रिंट द्वारा तुरंत निकासी।", docs: ["पहचान प्रमाण पत्र संख्या", "बैंक का नाम", "बायोमेट्रिक फिंगरप्रिंट"], icon: "fa-money-bill-transfer", bg: "#fff7ed", color: "#ea580c" },
+      { cat: "certificates", title: "नया राशन कार्ड / नाम जोड़ना", desc: "नया राशन कार्ड व परिवार का नाम जोड़ना।", docs: ["सभी सदस्यों के पहचान प्रमाण पत्र", "संयुक्त पारिवारिक फ़ोटो", "बैंक पासबुक (महिला मुखिया)"], icon: "fa-wheat-awn", bg: "#fdf2f8", color: "#db2777" },
+      { cat: "jobs", title: "सरकारी भर्ती परीक्षा फॉर्म", desc: "BSSC, Railway, Police, SSC भर्ती फॉर्म।", docs: ["10वीं/12वीं अंकतालिका", "पासपोर्ट फ़ोटो व हस्ताक्षर", "जाति प्रमाण पत्र"], icon: "fa-graduation-cap", bg: "#eff6ff", color: "#2563eb" },
+      { cat: "store", title: "कलर प्रिंट, लैमिनेशन व एक्सेसरीज़", desc: "प्रिंटिंग, लैमिनेशन, चार्जर व केबल।", docs: ["मूल कागज़ात या WhatsApp फ़ोटो"], icon: "fa-mobile-screen-button", bg: "#f0f9ff", color: "#0284c7" }
+    ];
+
+    function renderServices(list) {
+      const container = document.getElementById("servicesContainer");
+      container.innerHTML = "";
+      if(list.length === 0) {
+        container.innerHTML = '<p style="text-align:center; color:var(--text-muted); font-size:13px; padding:20px;">कोई सेवा नहीं मिली</p>';
+        return;
+      }
+      list.forEach(item => {
+        const div = document.createElement("div");
+        div.className = "card";
+        div.style.margin = "0";
+        div.innerHTML = `
+          <div style="display:flex; gap:12px; align-items:flex-start; margin-bottom:12px;">
+            <div style="width:40px; height:40px; border-radius:10px; background:${item.bg}; color:${item.color}; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0;">
+              <i class="fa-solid ${item.icon}"></i>
+            </div>
+            <div>
+              <h3 style="font-size:14px; font-weight:700; color:var(--text);">${item.title}</h3>
+              <p style="font-size:11px; color:var(--text-muted); margin-top:2px;">${item.desc}</p>
+            </div>
+          </div>
+          <div style="display:flex; gap:8px;">
+            <button onclick='openModal(${JSON.stringify(item)})' style="flex:1; background:var(--bg); border:1px solid var(--border); color:var(--text); padding:8px; border-radius:6px; font-size:11px; font-weight:700; cursor:pointer;"><i class="fa-regular fa-file-lines"></i> दस्तावेज़ देखें</button>
+            <a href="apply.html?srv=${encodeURIComponent(item.title)}" style="flex:1; background:var(--wa); color:#fff; padding:8px; border-radius:6px; font-size:11px; font-weight:700; text-decoration:none; text-align:center;"><i class="fa-solid fa-paper-plane"></i> आवेदन करें</a>
+          </div>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    document.getElementById("serviceSearchInput").addEventListener("input", (e) => {
+      const q = e.target.value.toLowerCase().trim();
+      renderServices(servicesDB.filter(s => s.title.toLowerCase().includes(q) || s.desc.toLowerCase().includes(q)));
+    });
+
+    function filterCat(cat, btn) {
+      document.querySelectorAll(".tab-btn").forEach(b => {
+        b.style.background = "var(--card-bg)";
+        b.style.color = "var(--text-muted)";
+      });
+      btn.style.background = "var(--primary)";
+      btn.style.color = "#fff";
+      renderServices(cat === "all" ? servicesDB : servicesDB.filter(s => s.cat === cat));
+    }
+
+    function openModal(item) {
+      document.getElementById("modalTitle").innerText = item.title;
+      const list = document.getElementById("modalList");
+      list.innerHTML = "";
+      item.docs.forEach(d => {
+        const li = document.createElement("li");
+        li.style.cssText = "font-size:12px; margin-bottom:6px; display:flex; align-items:center; gap:6px;";
+        li.innerHTML = `<i class="fa-solid fa-circle-check" style="color:var(--wa);"></i> <span>${d}</span>`;
+        list.appendChild(li);
+      });
+      document.getElementById("modalApplyBtn").href = `apply.html?srv=${encodeURIComponent(item.title)}`;
+      document.getElementById("docModal").classList.add("active");
+    }
+    function closeModal() { document.getElementById("docModal").classList.remove("active"); }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const statusBadge = document.getElementById("serviceStoreStatus");
+      if (!statusBadge) return;
+      const currentHour = new Date().getHours();
+      if (currentHour >= 8 && currentHour < 20) {
+        statusBadge.innerText = "● अभी खुली है (Open)";
+        statusBadge.style.background = "#dcfce7";
+        statusBadge.style.color = "#15803d";
+      } else {
+        statusBadge.innerText = "● अभी बंद है (Closed)";
+        statusBadge.style.background = "#fee2e2";
+        statusBadge.style.color = "#dc2626";
+      }
+    });
+
+    renderServices(servicesDB);
+  </script>
+  <script>
+  // डायरेक्ट बटन क्लिक टेस्ट
+  document.getElementById("themeBtn").onclick = function() {
+    document.body.classList.toggle("dark-mode");
+  };
+</script>
+
+</body>
+</html>
