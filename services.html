@@ -237,6 +237,87 @@
     document.body.classList.toggle("dark-mode");
   };
 </script>
+    <!-- Script Engine & Synchronization -->
+  <script src="script.js"></script>
+
+  <script>
+    // 1. Real-Time Auto Clock & Store Status Engine (Syncs both Main & Drawer badges)
+    function updateShopLiveStatus() {
+      const statusBadge = document.getElementById("homeStoreStatus");
+      const drawerBadge = document.getElementById("drawerStoreStatus");
+
+      const savedStatus = localStorage.getItem("roc_status");
+
+      // Check admin manual override
+      if (savedStatus === "closed") {
+        applyStatusStyles("● आज बंद है (Closed)", "#fee2e2", "#dc2626");
+        return;
+      } else if (savedStatus === "open") {
+        applyStatusStyles("● अभी खुली है (Open)", "#dcfce7", "#15803d");
+        return;
+      }
+
+      // Auto time based (8:00 AM to 8:00 PM)
+      const currentHour = new Date().getHours();
+      const isOpen = (currentHour >= 8 && currentHour < 20);
+
+      if (isOpen) {
+        applyStatusStyles("● अभी खुली है (Open)", "#dcfce7", "#15803d");
+      } else {
+        applyStatusStyles("● अभी बंद है (Closed)", "#fee2e2", "#dc2626");
+      }
+
+      function applyStatusStyles(text, bg, color) {
+        if (statusBadge) {
+          statusBadge.innerText = text;
+          statusBadge.style.background = bg;
+          statusBadge.style.color = color;
+        }
+        if (drawerBadge) {
+          drawerBadge.innerText = text;
+          drawerBadge.style.background = bg;
+          drawerBadge.style.color = color;
+        }
+      }
+    }
+
+    // 2. Admin Panel Data Sync (Ticker, Timing, UPI)
+    document.addEventListener("DOMContentLoaded", () => {
+      // Ticker Sync
+      const savedTicker = localStorage.getItem("roc_ticker");
+      const tickerEl = document.getElementById("liveTickerText");
+      if (savedTicker && tickerEl) tickerEl.innerText = savedTicker;
+
+      // Timing Sync
+      const savedTiming = localStorage.getItem("roc_timing");
+      const timingEl = document.getElementById("homeStoreTiming");
+      if (savedTiming && timingEl) timingEl.innerText = savedTiming;
+
+      // UPI Sync
+      const savedUPI = localStorage.getItem("roc_upi");
+      const upiTextEl = document.getElementById("upiIdText");
+      if (savedUPI && upiTextEl) upiTextEl.innerText = savedUPI;
+
+      // Run Status check immediately
+      updateShopLiveStatus();
+    });
+
+    // Check status every 1 minute
+    setInterval(updateShopLiveStatus, 60000);
+
+    // 3. Helper Functions
+    function copyAddress() {
+      navigator.clipboard.writeText("राहुल ऑनलाइन सेंटर, पाण्डेयडीह रोड, पोस्ट एवं थाना: झाझा, जिला: जमुई (बिहार) - 811308");
+      alert("✓ दुकान का पूरा पता कॉपी हो गया!");
+    }
+
+    function copyUPI() {
+      const upi = document.getElementById("upiIdText").innerText;
+      navigator.clipboard.writeText(upi);
+      alert("✓ UPI ID कॉपी हो गया: " + upi);
+    }
+  </script>
+
 
 </body>
 </html>
