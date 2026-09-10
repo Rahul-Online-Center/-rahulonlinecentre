@@ -9,7 +9,7 @@
 </head>
 <body>
 
-  <!-- Top Live Announcement Strip (Connected to Admin) -->
+  <!-- Top Live Announcement Strip -->
   <div class="top-bar">
     <div class="container" style="display:flex; align-items:center; gap:8px;">
       <span style="background:#e11d48; color:#fff; font-size:9px; font-weight:800; padding:2px 6px; border-radius:3px;">LIVE</span>
@@ -37,7 +37,7 @@
     </div>
   </header>
 
-  <!-- Side Navigation Drawer (Updated Layout) -->
+  <!-- Side Navigation Drawer -->
   <div class="drawer-overlay" id="overlay"></div>
   <aside class="drawer" id="drawer">
     <div class="drawer-head">
@@ -70,7 +70,7 @@
 
     <div style="padding:14px; border-top:1px solid var(--border); display:flex; flex-direction:column; gap:8px;">
       <!-- WhatsApp Share Link -->
-      <a href="https://api.whatsapp.com/send?text=*Rahul%20Online%20Centre%20(झाझा)*%20पर%20जाति,%20आय,%20निवास,%20पैन%20कार्ड%20व%20सरकारी%20फॉर्म%20घर%20बैठे%20भरवाएं।%20टोकन%20लिंक:%20https://rahul-online-center.github.io/-rahulonlinecentre/" target="_blank" style="background:#0284c7; color:#fff; padding:9px; text-align:center; border-radius:8px; font-size:11.5px; font-weight:800; text-decoration:none; display:flex; align-items:center; justify-content:center; gap:6px;">
+      <a href="https://api.whatsapp.com/send?text=*Rahul%20Online%20Centre%20(झाझा)*%20पर%20जाति,%20आय,%20निवास,%20पैन%20कार्ड%20व%20सरकारी%20फॉर्म%20घर%20बैठे%20भरवाएं।%20टोकन%20लिंक:%20https://rahul-online-centre.github.io" target="_blank" style="background:#0284c7; color:#fff; padding:9px; text-align:center; border-radius:8px; font-size:11.5px; font-weight:800; text-decoration:none; display:flex; align-items:center; justify-content:center; gap:6px;">
         <i class="fa-solid fa-share-nodes"></i> दोस्तों को WhatsApp पर शेयर करें
       </a>
 
@@ -83,16 +83,10 @@
       <a href="https://wa.me/919546565270?text=नमस्ते%20राहुल%20भैया" target="_blank" style="background:var(--wa); color:#fff; padding:9px; text-align:center; border-radius:8px; font-size:12px; font-weight:700; text-decoration:none;">
         <i class="fa-brands fa-whatsapp"></i> WhatsApp चैट
       </a>
-
-      <div style="text-align:center; margin-top:4px;">
-        <a href="admin.html" style="color:#64748b; font-size:11px; text-decoration:none; font-weight:600;">
-          <i class="fa-solid fa-lock"></i> संचालक एडमिन लॉगिन
-        </a>
-      </div>
     </div>
   </aside>
 
-  <!-- Live Time & Store Status Quick Banner (Real-time Auto & Admin Sync) -->
+  <!-- Live Time & Store Status Quick Banner -->
   <div style="background:var(--card-bg); border-bottom:1px solid var(--border); padding:8px 0; font-size:11px;">
     <div class="container" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
       <div style="display:flex; align-items:center; gap:6px; color:var(--text);">
@@ -169,6 +163,45 @@
           </button>
         </div>
         <p style="font-size:10px; color:#16a34a; font-weight:700;">✓ पेमेंट करने के बाद स्क्रीनशॉट WhatsApp पर भेजें</p>
+      </div>
+    </section>
+
+    <!-- Key Services Highlight Grid -->
+    <section style="margin-bottom:24px;">
+      <div style="text-align:center; margin-bottom:14px;">
+        <span style="font-size:10px; font-weight:800; color:var(--primary); letter-spacing:1px; text-transform:uppercase;">POPULAR SERVICES</span>
+        <h2 style="font-size:18px; font-weight:800;">प्रमुख ऑनलाइन सेवाएँ</h2>
+        <p style="font-size:11px; color:var(--text-muted); margin-top:2px;">केंद्र पर उपलब्ध मुख्य डिजिटल एवं ई-गवर्नेंस सेवाएँ</p>
+      </div>
+
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(140px, 1fr)); gap:10px;">
+        <div class="card" style="padding:14px; text-align:center;">
+          <i class="fa-solid fa-file-shield" style="font-size:24px; color:#2563eb; margin-bottom:8px; display:block;"></i>
+          <h4 style="font-size:13px; font-weight:700; margin-bottom:4px;">प्रमाण पत्र</h4>
+          <p style="font-size:10.5px; color:var(--text-muted); margin-bottom:8px;">जाति, आय, निवास, EWS एवं OBC (NCL) प्रमाण पत्र</p>
+          <a href="apply.html?srv=जाति प्रमाण पत्र" style="font-size:11px; color:var(--primary); font-weight:700; text-decoration:none;">टोकन लें →</a>
+        </div>
+
+        <div class="card" style="padding:14px; text-align:center;">
+          <i class="fa-solid fa-id-card" style="font-size:24px; color:#16a34a; margin-bottom:8px; display:block;"></i>
+          <h4 style="font-size:13px; font-weight:700; margin-bottom:4px;">पैन कार्ड</h4>
+          <p style="font-size:10.5px; color:var(--text-muted); margin-bottom:8px;">नया पैन कार्ड, सुधार एवं खोए हुए पैन की रीप्रिंट</p>
+          <a href="apply.html?srv=नया पैन कार्ड" style="font-size:11px; color:var(--primary); font-weight:700; text-decoration:none;">टोकन लें →</a>
+        </div>
+
+        <div class="card" style="padding:14px; text-align:center;">
+          <i class="fa-solid fa-graduation-cap" style="font-size:24px; color:#ea580c; margin-bottom:8px; display:block;"></i>
+          <h4 style="font-size:13px; font-weight:700; margin-bottom:4px;">नौकरी फॉर्म</h4>
+          <p style="font-size:10.5px; color:var(--text-muted); margin-bottom:8px;">SSC, BPSC, रेलवे, पुलिस व सभी प्रतियोगी परीक्षा फॉर्म</p>
+          <a href="apply.html?srv=ऑनलाइन भर्ती परीक्षा फॉर्म" style="font-size:11px; color:var(--primary); font-weight:700; text-decoration:none;">टोकन लें →</a>
+        </div>
+
+        <div class="card" style="padding:14px; text-align:center;">
+          <i class="fa-solid fa-money-bill-transfer" style="font-size:24px; color:#0284c7; margin-bottom:8px; display:block;"></i>
+          <h4 style="font-size:13px; font-weight:700; margin-bottom:4px;">आधार बैंकिंग</h4>
+          <p style="font-size:10.5px; color:var(--text-muted); margin-bottom:8px;">फिंगरप्रिंट से नकद निकासी, बैलेंस जाँच व मिनी स्टेटमेंट</p>
+          <a href="services.html" style="font-size:11px; color:var(--primary); font-weight:700; text-decoration:none;">विवरण देखें →</a>
+        </div>
       </div>
     </section>
 
@@ -262,179 +295,19 @@
   <script src="script.js"></script>
 
   <script>
-    // 1. Dark Mode Logic with LocalStorage
-    const themeBtn = document.getElementById("themeBtn");
-    if (localStorage.getItem("roc_theme") === "dark") {
-      document.body.classList.add("dark-mode");
-      if (themeBtn) themeBtn.innerHTML = '<i class="fa-solid fa-sun"></i>';
-    }
-
-    if (themeBtn) {
-      themeBtn.onclick = function() {
-        document.body.classList.toggle("dark-mode");
-        const isDark = document.body.classList.contains("dark-mode");
-        localStorage.setItem("roc_theme", isDark ? "dark" : "light");
-        themeBtn.innerHTML = isDark ? '<i class="fa-solid fa-sun"></i>' : '<i class="fa-solid fa-moon"></i>';
-      };
-    }
-
-    // 2. Real-Time Auto Clock & Store Status Engine (Syncs both Main & Drawer badges)
-    function updateShopLiveStatus() {
-      const statusBadge = document.getElementById("homeStoreStatus");
-      const drawerBadge = document.getElementById("drawerStoreStatus");
-
-      const savedStatus = localStorage.getItem("roc_status");
-
-      // Check admin manual override
-      if (savedStatus === "closed") {
-        applyStatusStyles("● आज बंद है (Closed)", "#fee2e2", "#dc2626");
-        return;
-      } else if (savedStatus === "open") {
-        applyStatusStyles("● अभी खुली है (Open)", "#dcfce7", "#15803d");
-        return;
-      }
-
-      // Auto time based (8:00 AM to 8:00 PM)
-      const currentHour = new Date().getHours();
-      const isOpen = (currentHour >= 8 && currentHour < 20);
-
-      if (isOpen) {
-        applyStatusStyles("● अभी खुली है (Open)", "#dcfce7", "#15803d");
-      } else {
-        applyStatusStyles("● अभी बंद है (Closed)", "#fee2e2", "#dc2626");
-      }
-
-      function applyStatusStyles(text, bg, color) {
-        if (statusBadge) {
-          statusBadge.innerText = text;
-          statusBadge.style.background = bg;
-          statusBadge.style.color = color;
-        }
-        if (drawerBadge) {
-          drawerBadge.innerText = text;
-          drawerBadge.style.background = bg;
-          drawerBadge.style.color = color;
-        }
-      }
-    }
-
-    // 3. Admin Panel Data Sync (Ticker, Timing, UPI)
-    document.addEventListener("DOMContentLoaded", () => {
-      // Ticker Sync
-      const savedTicker = localStorage.getItem("roc_ticker");
-      const tickerEl = document.getElementById("liveTickerText");
-      if (savedTicker && tickerEl) tickerEl.innerText = savedTicker;
-
-      // Timing Sync
-      const savedTiming = localStorage.getItem("roc_timing");
-      const timingEl = document.getElementById("homeStoreTiming");
-      if (savedTiming && timingEl) timingEl.innerText = savedTiming;
-
-      // UPI Sync
-      const savedUPI = localStorage.getItem("roc_upi");
-      const upiTextEl = document.getElementById("upiIdText");
-      if (savedUPI && upiTextEl) upiTextEl.innerText = savedUPI;
-
-      // Run Status check immediately
-      updateShopLiveStatus();
-    });
-
-    // Check status every 1 minute
-    setInterval(updateShopLiveStatus, 60000);
-
-    // 4. Helper Functions
+    // Copy Address Helper Function
     function copyAddress() {
       navigator.clipboard.writeText("राहुल ऑनलाइन सेंटर, पाण्डेयडीह रोड, पोस्ट एवं थाना: झाझा, जिला: जमुई (बिहार) - 811308");
       alert("✓ दुकान का पूरा पता कॉपी हो गया!");
     }
 
+    // Copy UPI Helper Function
     function copyUPI() {
       const upi = document.getElementById("upiIdText").innerText;
       navigator.clipboard.writeText(upi);
       alert("✓ UPI ID कॉपी हो गया: " + upi);
     }
   </script>
-    <!-- Script Engine & Synchronization -->
-  <script src="script.js"></script>
-
-  <script>
-    // 1. Real-Time Auto Clock & Store Status Engine (Syncs both Main & Drawer badges)
-    function updateShopLiveStatus() {
-      const statusBadge = document.getElementById("homeStoreStatus");
-      const drawerBadge = document.getElementById("drawerStoreStatus");
-
-      const savedStatus = localStorage.getItem("roc_status");
-
-      // Check admin manual override
-      if (savedStatus === "closed") {
-        applyStatusStyles("● आज बंद है (Closed)", "#fee2e2", "#dc2626");
-        return;
-      } else if (savedStatus === "open") {
-        applyStatusStyles("● अभी खुली है (Open)", "#dcfce7", "#15803d");
-        return;
-      }
-
-      // Auto time based (8:00 AM to 8:00 PM)
-      const currentHour = new Date().getHours();
-      const isOpen = (currentHour >= 8 && currentHour < 20);
-
-      if (isOpen) {
-        applyStatusStyles("● अभी खुली है (Open)", "#dcfce7", "#15803d");
-      } else {
-        applyStatusStyles("● अभी बंद है (Closed)", "#fee2e2", "#dc2626");
-      }
-
-      function applyStatusStyles(text, bg, color) {
-        if (statusBadge) {
-          statusBadge.innerText = text;
-          statusBadge.style.background = bg;
-          statusBadge.style.color = color;
-        }
-        if (drawerBadge) {
-          drawerBadge.innerText = text;
-          drawerBadge.style.background = bg;
-          drawerBadge.style.color = color;
-        }
-      }
-    }
-
-    // 2. Admin Panel Data Sync (Ticker, Timing, UPI)
-    document.addEventListener("DOMContentLoaded", () => {
-      // Ticker Sync
-      const savedTicker = localStorage.getItem("roc_ticker");
-      const tickerEl = document.getElementById("liveTickerText");
-      if (savedTicker && tickerEl) tickerEl.innerText = savedTicker;
-
-      // Timing Sync
-      const savedTiming = localStorage.getItem("roc_timing");
-      const timingEl = document.getElementById("homeStoreTiming");
-      if (savedTiming && timingEl) timingEl.innerText = savedTiming;
-
-      // UPI Sync
-      const savedUPI = localStorage.getItem("roc_upi");
-      const upiTextEl = document.getElementById("upiIdText");
-      if (savedUPI && upiTextEl) upiTextEl.innerText = savedUPI;
-
-      // Run Status check immediately
-      updateShopLiveStatus();
-    });
-
-    // Check status every 1 minute
-    setInterval(updateShopLiveStatus, 60000);
-
-    // 3. Helper Functions
-    function copyAddress() {
-      navigator.clipboard.writeText("राहुल ऑनलाइन सेंटर, पाण्डेयडीह रोड, पोस्ट एवं थाना: झाझा, जिला: जमुई (बिहार) - 811308");
-      alert("✓ दुकान का पूरा पता कॉपी हो गया!");
-    }
-
-    function copyUPI() {
-      const upi = document.getElementById("upiIdText").innerText;
-      navigator.clipboard.writeText(upi);
-      alert("✓ UPI ID कॉपी हो गया: " + upi);
-    }
-  </script>
-
 
 </body>
 </html>
