@@ -98,7 +98,19 @@ function syncWithGoogleSheet() {
         if (timingEl) timingEl.innerText = settings["timing"];
       }
 
-      // (C) दुकान का स्टेटस (Open/Closed/Auto)
+      // (C) आपातकालीन सूचना (Emergency Notice)
+      const noticeBox = document.getElementById("liveEmergencyNotice");
+      const noticeText = document.getElementById("emergencyNoticeText");
+      if (noticeBox && noticeText) {
+        if (settings["notice"] && settings["notice"].trim().length > 0) {
+          noticeText.innerText = settings["notice"];
+          noticeBox.style.display = "flex"; // नोटिस होने पर ही दिखेगा
+        } else {
+          noticeBox.style.display = "none"; // खाली होने पर गायब रहेगा
+        }
+      }
+
+      // (D) दुकान का स्टेटस (Open/Closed/Auto)
       const statusVal = settings["status"] ? settings["status"].toLowerCase() : "";
       if (statusVal === "open") {
         applyShopStatus("● अभी खुली है (Open)", "#dcfce7", "#15803d");
@@ -108,7 +120,7 @@ function syncWithGoogleSheet() {
         setTimeBasedStatus();
       }
 
-      // (D) UPI ID अपडेट
+      // (E) UPI ID अपडेट
       if (settings["upi"]) {
         const upiEl = document.getElementById("upiIdText");
         if (upiEl) upiEl.innerText = settings["upi"];
