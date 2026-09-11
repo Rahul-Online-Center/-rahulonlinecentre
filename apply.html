@@ -279,7 +279,7 @@
       <li><a href="services.html"><i class="fa-solid fa-list-check"></i> 2. सेवाएँ व दस्तावेज़ (Services)</a></li>
       <li><a href="apply.html" style="color:var(--primary); font-weight:800;"><i class="fa-solid fa-ticket"></i> 3. ऑनलाइन टोकन फॉर्म (Apply)</a></li>
       <li><a href="contact.html"><i class="fa-solid fa-map-location-dot"></i> 4. संपर्क व लोकेशन (Contact)</a></li>
-     </ul>
+    </ul>
 
     <div style="padding:14px; border-top:1px solid var(--border); display:flex; flex-direction:column; gap:8px;">
       <a href="tel:9546565270" style="background:var(--bg); border:1px solid var(--border); color:var(--text); padding:9px; text-align:center; border-radius:8px; font-size:12px; font-weight:700; text-decoration:none;"><i class="fa-solid fa-phone"></i> 9546565270</a>
@@ -601,41 +601,19 @@
     <i class="fa-brands fa-whatsapp"></i>
   </a>
 
+  <!-- Google Sheet Sync, Dark Mode & Menu Engine -->
   <script src="script.js"></script>
 
+  <!-- Apply Form Page Engine -->
   <script>
     let globalTotal = 0;
     let lastSubmitTime = 0;
 
-    // 1. Theme sync
-    const themeBtn = document.getElementById("themeBtn");
-    if (localStorage.getItem("roc_theme") === "dark") {
-      document.body.classList.add("dark-mode");
-      if (themeBtn) themeBtn.innerHTML = '<i class="fa-solid fa-sun"></i>';
-    }
-
-    if (themeBtn) {
-      themeBtn.onclick = function() {
-        document.body.classList.toggle("dark-mode");
-        const isDark = document.body.classList.contains("dark-mode");
-        localStorage.setItem("roc_theme", isDark ? "dark" : "light");
-        themeBtn.innerHTML = isDark ? '<i class="fa-solid fa-sun"></i>' : '<i class="fa-solid fa-moon"></i>';
-      };
-    }
-
-    // 2. Ticker & UPI sync
+    // Google Sheet से लाइव Ticker व UPI सिंक
     document.addEventListener("DOMContentLoaded", () => {
-      const savedTicker = localStorage.getItem("roc_ticker");
-      const tickerEl = document.getElementById("applyLiveTicker");
-      if (savedTicker && tickerEl) tickerEl.innerText = savedTicker;
-
-      const savedUPI = localStorage.getItem("roc_upi");
-      const upiEl = document.getElementById("applyUpiText");
-      if (savedUPI && upiEl) upiEl.innerText = savedUPI;
-
       const urlParams = new URLSearchParams(window.location.search);
       const srvParam = urlParams.get("srv");
-      if(srvParam) {
+      if (srvParam) {
         const checkboxes = document.querySelectorAll('input[name="serviceCheckbox"]');
         checkboxes.forEach(cb => {
           if (cb.value === srvParam || srvParam.includes(cb.value)) {
@@ -644,6 +622,30 @@
         });
         calculateTotal();
       }
+
+      // Google Sheet से UPI मिलने पर अपडेट
+      fetch("https://docs.google.com/spreadsheets/d/1n-3SAy9Yfh7qTx8oiiz9eoCxaUUJTQuj2g1btYrp74s/gviz/tq?tqx=out:csv")
+        .then(res => res.text())
+        .then(csvText => {
+          const rows = csvText.trim().split("\n");
+          rows.forEach(row => {
+            const cols = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+            if (cols.length >= 2) {
+              const key = cols[0].replace(/^["']|["']$/g, "").trim().toLowerCase();
+              const val = cols[1].replace(/^["']|["']$/g, "").trim();
+              if (key === "upi") {
+                const upiEl = document.getElementById("applyUpiText");
+                if (upiEl) upiEl.innerText = val;
+                updateDynamicPaymentLink(globalTotal);
+              }
+              if (key === "ticker") {
+                const tickerEl = document.getElementById("applyLiveTicker");
+                if (tickerEl) tickerEl.innerText = val;
+              }
+            }
+          });
+        })
+        .catch(err => console.log("apply.html sheet sync fallback active"));
     });
 
     const docsMap = {
@@ -743,7 +745,6 @@
       }
     }
 
-    // MULTI-APP UPI DIRECT CALLER
     function payViaSpecificApp(appType) {
       if (globalTotal <= 0) {
         alert("⚠️ कृपया पहले ऊपर से कम से कम एक सेवा का चयन करें!");
@@ -754,16 +755,12 @@
       let intentURL = "";
 
       if (appType === 'phonepe') {
-        // Direct PhonePe Intent
         intentURL = `phonepe://pay?pa=${upiId}&pn=Rahul%20Online%20Centre&am=${globalTotal}&cu=INR&tn=ROC_Token`;
       } else if (appType === 'gpay') {
-        // Direct Google Pay Intent
         intentURL = `tez://upi/pay?pa=${upiId}&pn=Rahul%20Online%20Centre&am=${globalTotal}&cu=INR&tn=ROC_Token`;
       } else if (appType === 'paytm') {
-        // Direct Paytm Intent
         intentURL = `paytmmp://pay?pa=${upiId}&pn=Rahul%20Online%20Centre&am=${globalTotal}&cu=INR&tn=ROC_Token`;
       } else {
-        // Standard Android Generic UPI Chooser (Shows all UPI Apps)
         intentURL = `upi://pay?pa=${upiId}&pn=Rahul%20Online%20Centre&am=${globalTotal}&cu=INR&tn=ROC_Token`;
       }
 
@@ -794,7 +791,6 @@
     function submitToken(e) {
       e.preventDefault();
 
-      // Anti-spam 30s lock
       const currentTime = Date.now();
       if (currentTime - lastSubmitTime < 30000) {
         alert("⚠️ कृपया प्रतीक्षा करें! आप 30 सेकंड में केवल एक बार ही टोकन सबमिट कर सकते हैं।");
@@ -860,7 +856,6 @@
       document.getElementById("receiptModal").style.display = "flex";
       lastSubmitTime = currentTime;
 
-      // STRICT WHATSAPP SECURITY PAYLOAD
       let msg = `*नमस्ते राहुल भैया (Rahul Online Centre)* 🙏\n\n`;
       msg += `🎟️ *टोकन नंबर:* ${uniqueToken}\n`;
       msg += `👤 *ग्राहक का नाम:* ${name}\n`;
@@ -889,87 +884,6 @@
       document.getElementById("receiptModal").style.display = "none";
     }
   </script>
-    <!-- Script Engine & Synchronization -->
-  <script src="script.js"></script>
-
-  <script>
-    // 1. Real-Time Auto Clock & Store Status Engine (Syncs both Main & Drawer badges)
-    function updateShopLiveStatus() {
-      const statusBadge = document.getElementById("homeStoreStatus");
-      const drawerBadge = document.getElementById("drawerStoreStatus");
-
-      const savedStatus = localStorage.getItem("roc_status");
-
-      // Check admin manual override
-      if (savedStatus === "closed") {
-        applyStatusStyles("● आज बंद है (Closed)", "#fee2e2", "#dc2626");
-        return;
-      } else if (savedStatus === "open") {
-        applyStatusStyles("● अभी खुली है (Open)", "#dcfce7", "#15803d");
-        return;
-      }
-
-      // Auto time based (8:00 AM to 8:00 PM)
-      const currentHour = new Date().getHours();
-      const isOpen = (currentHour >= 8 && currentHour < 20);
-
-      if (isOpen) {
-        applyStatusStyles("● अभी खुली है (Open)", "#dcfce7", "#15803d");
-      } else {
-        applyStatusStyles("● अभी बंद है (Closed)", "#fee2e2", "#dc2626");
-      }
-
-      function applyStatusStyles(text, bg, color) {
-        if (statusBadge) {
-          statusBadge.innerText = text;
-          statusBadge.style.background = bg;
-          statusBadge.style.color = color;
-        }
-        if (drawerBadge) {
-          drawerBadge.innerText = text;
-          drawerBadge.style.background = bg;
-          drawerBadge.style.color = color;
-        }
-      }
-    }
-
-    // 2. Admin Panel Data Sync (Ticker, Timing, UPI)
-    document.addEventListener("DOMContentLoaded", () => {
-      // Ticker Sync
-      const savedTicker = localStorage.getItem("roc_ticker");
-      const tickerEl = document.getElementById("liveTickerText");
-      if (savedTicker && tickerEl) tickerEl.innerText = savedTicker;
-
-      // Timing Sync
-      const savedTiming = localStorage.getItem("roc_timing");
-      const timingEl = document.getElementById("homeStoreTiming");
-      if (savedTiming && timingEl) timingEl.innerText = savedTiming;
-
-      // UPI Sync
-      const savedUPI = localStorage.getItem("roc_upi");
-      const upiTextEl = document.getElementById("upiIdText");
-      if (savedUPI && upiTextEl) upiTextEl.innerText = savedUPI;
-
-      // Run Status check immediately
-      updateShopLiveStatus();
-    });
-
-    // Check status every 1 minute
-    setInterval(updateShopLiveStatus, 60000);
-
-    // 3. Helper Functions
-    function copyAddress() {
-      navigator.clipboard.writeText("राहुल ऑनलाइन सेंटर, पाण्डेयडीह रोड, पोस्ट एवं थाना: झाझा, जिला: जमुई (बिहार) - 811308");
-      alert("✓ दुकान का पूरा पता कॉपी हो गया!");
-    }
-
-    function copyUPI() {
-      const upi = document.getElementById("upiIdText").innerText;
-      navigator.clipboard.writeText(upi);
-      alert("✓ UPI ID कॉपी हो गया: " + upi);
-    }
-  </script>
-
 
 </body>
 </html>
