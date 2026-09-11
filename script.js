@@ -1,136 +1,129 @@
 /* ==========================================================================
-   RAHUL ONLINE CENTRE - MASTER ENGINE (script.js)
-   Theme + Side Drawer + Live Status + Admin Storage Sync
+   Rahul Online Centre - Master Script Engine with Google Sheets Live Sync
    ========================================================================== */
 
-document.addEventListener("DOMContentLoaded", () => {
-  // 1. LIGHT / DARK THEME ENGINE (Universal Key Sync)
-  const themeBtn = document.getElementById("themeBtn");
-  const savedTheme = localStorage.getItem("roc_theme") || localStorage.getItem("theme");
+// 1. आपकी Google Sheet का लाइव CSV लिंक
+const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/1n-3SAy9Yfh7qTx8oiiz9eoCxaUUJTQuj2g1btYrp74s/gviz/tq?tqx=out:csv";
 
-  if (savedTheme === "dark") {
-    document.body.classList.add("dark-mode");
-    if (themeBtn) themeBtn.innerHTML = '<i class="fa-solid fa-sun"></i>';
-  }
+// 2. डार्क मोड (Dark Mode Toggle & Persistence)
+const themeBtn = document.getElementById("themeBtn");
+if (localStorage.getItem("roc_theme") === "dark") {
+  document.body.classList.add("dark-mode");
+  if (themeBtn) themeBtn.innerHTML = '<i class="fa-solid fa-sun"></i>';
+}
 
-  if (themeBtn) {
-    themeBtn.addEventListener("click", () => {
-      document.body.classList.toggle("dark-mode");
-      const isDark = document.body.classList.contains("dark-mode");
+if (themeBtn) {
+  themeBtn.onclick = function () {
+    document.body.classList.toggle("dark-mode");
+    const isDark = document.body.classList.contains("dark-mode");
+    localStorage.setItem("roc_theme", isDark ? "dark" : "light");
+    themeBtn.innerHTML = isDark ? '<i class="fa-solid fa-sun"></i>' : '<i class="fa-solid fa-moon"></i>';
+  };
+}
 
-      localStorage.setItem("roc_theme", isDark ? "dark" : "light");
-      localStorage.setItem("theme", isDark ? "dark" : "light");
+// 3. साइड मेनू ड्रॉर (Drawer Navigation Toggle)
+const menuBtn = document.getElementById("menuBtn");
+const closeDrawerBtn = document.getElementById("closeDrawer");
+const drawer = document.getElementById("drawer");
+const overlay = document.getElementById("overlay");
 
-      themeBtn.innerHTML = isDark
-        ? '<i class="fa-solid fa-sun"></i>'
-        : '<i class="fa-solid fa-moon"></i>';
-    });
-  }
+function openSideMenu() {
+  if (drawer) drawer.classList.add("active");
+  if (overlay) overlay.classList.add("active");
+}
 
-  // 2. 3-LINE SIDE DRAWER MENU ENGINE
-  const menuBtn = document.getElementById("menuBtn");
-  const closeDrawerBtn = document.getElementById("closeDrawer");
-  const drawer = document.getElementById("drawer");
-  const overlay = document.getElementById("overlay");
+function closeSideMenu() {
+  if (drawer) drawer.classList.remove("active");
+  if (overlay) overlay.classList.remove("active");
+}
 
-  function openDrawer() {
-    if (drawer && overlay) {
-      drawer.classList.add("active");
-      overlay.classList.add("active");
-      document.body.style.overflow = "hidden";
-    }
-  }
+if (menuBtn) menuBtn.onclick = openSideMenu;
+if (closeDrawerBtn) closeDrawerBtn.onclick = closeSideMenu;
+if (overlay) overlay.onclick = closeSideMenu;
 
-  function closeDrawer() {
-    if (drawer && overlay) {
-      drawer.classList.remove("active");
-      overlay.classList.remove("active");
-      document.body.style.overflow = "";
-    }
-  }
+// 4. दुकान की स्थिति (Status Helper)
+function applyShopStatus(text, bg, color) {
+  const homeBadge = document.getElementById("homeStoreStatus");
+  const drawerBadge = document.getElementById("drawerStoreStatus");
+  const serviceBadge = document.getElementById("serviceStoreStatus");
 
-  if (menuBtn) menuBtn.addEventListener("click", openDrawer);
-  if (closeDrawerBtn) closeDrawerBtn.addEventListener("click", closeDrawer);
-  if (overlay) overlay.addEventListener("click", closeDrawer);
-
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && drawer && drawer.classList.contains("active")) {
-      closeDrawer();
+  [homeBadge, drawerBadge, serviceBadge].forEach((badge) => {
+    if (badge) {
+      badge.innerText = text;
+      badge.style.background = bg;
+      badge.style.color = color;
     }
   });
+}
 
-  // 3. LIVE STORE STATUS ENGINE (Home + Drawer + Services Sync)
-  function updateAllStoreBadges() {
-    const statusBadges = document.querySelectorAll(
-      "#homeStoreStatus, #drawerStoreStatus, #serviceStoreStatus, #storeStatusBadge"
-    );
+// डिफ़ॉल्ट टाइम-आधारित स्टेटस (सुबह 8 से रात 8)
+function setTimeBasedStatus() {
+  const currentHour = new Date().getHours();
+  if (currentHour >= 8 && currentHour < 20) {
+    applyShopStatus("● अभी खुली है (Open)", "#dcfce7", "#15803d");
+  } else {
+    applyShopStatus("● अभी बंद है (Closed)", "#fee2e2", "#dc2626");
+  }
+}
 
-    if (statusBadges.length === 0) return;
+// 5. Google Sheet से लाइव डेटा लोड करना
+function syncWithGoogleSheet() {
+  fetch(SHEET_CSV_URL)
+    .then((res) => {
+      if (!res.ok) throw new Error("Network response was not ok");
+      return res.text();
+    })
+    .then((csvText) => {
+      const rows = csvText.trim().split("\n");
+      const settings = {};
 
-    const savedStatus =
-      localStorage.getItem("roc_status") ||
-      localStorage.getItem("roc_site_status") ||
-      "auto";
+      rows.forEach((row) => {
+        const cols = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+        if (cols.length >= 2) {
+          const key = cols[0].replace(/^["']|["']$/g, "").trim().toLowerCase();
+          const val = cols[1].replace(/^["']|["']$/g, "").trim();
+          settings[key] = val;
+        }
+      });
 
-    const hour = new Date().getHours();
-    const isAutoOpen = hour >= 8 && hour < 20;
-
-    let statusText = "";
-    let bgColor = "";
-    let textColor = "";
-
-    if (savedStatus === "open") {
-      statusText = "● अभी खुली है (Open)";
-      bgColor = "#dcfce7";
-      textColor = "#15803d";
-    } else if (savedStatus === "closed") {
-      statusText = "● आज बंद है (Closed)";
-      bgColor = "#fee2e2";
-      textColor = "#dc2626";
-    } else {
-      if (isAutoOpen) {
-        statusText = "● अभी खुली है (Open)";
-        bgColor = "#dcfce7";
-        textColor = "#15803d";
-      } else {
-        statusText = "● अभी बंद है (Closed)";
-        bgColor = "#fee2e2";
-        textColor = "#dc2626";
+      // (A) Ticker सूचना पट्टी अपडेट
+      if (settings["ticker"]) {
+        const tickerEl = document.getElementById("liveTickerText");
+        if (tickerEl) tickerEl.innerText = settings["ticker"];
       }
-    }
 
-    statusBadges.forEach((badge) => {
-      badge.innerText = statusText;
-      badge.style.background = bgColor;
-      badge.style.color = textColor;
+      // (B) दुकान का समय अपडेट
+      if (settings["timing"]) {
+        const timingEl = document.getElementById("homeStoreTiming");
+        if (timingEl) timingEl.innerText = settings["timing"];
+      }
+
+      // (C) दुकान का स्टेटस (Open/Closed/Auto)
+      const statusVal = settings["status"] ? settings["status"].toLowerCase() : "";
+      if (statusVal === "open") {
+        applyShopStatus("● अभी खुली है (Open)", "#dcfce7", "#15803d");
+      } else if (statusVal === "closed") {
+        applyShopStatus("● आज बंद है (Closed)", "#fee2e2", "#dc2626");
+      } else {
+        setTimeBasedStatus();
+      }
+
+      // (D) UPI ID अपडेट
+      if (settings["upi"]) {
+        const upiEl = document.getElementById("upiIdText");
+        if (upiEl) upiEl.innerText = settings["upi"];
+      }
+    })
+    .catch((err) => {
+      console.warn("Google Sheet sync error or fallback to auto:", err);
+      setTimeBasedStatus();
     });
-  }
+}
 
-  // 4. ADMIN PANEL SETTINGS SYNC (Ticker, Timing, UPI)
-  const savedTicker =
-    localStorage.getItem("roc_ticker") ||
-    localStorage.getItem("roc_site_ticker");
-  if (savedTicker) {
-    const marqueeList = document.querySelectorAll(".top-bar marquee, #liveTickerText");
-    marqueeList.forEach((mq) => (mq.innerText = savedTicker));
-  }
-
-  const savedTiming =
-    localStorage.getItem("roc_timing") ||
-    localStorage.getItem("roc_site_timing");
-  if (savedTiming) {
-    const timingElements = document.querySelectorAll(
-      "#homeStoreTiming, .timing-text"
-    );
-    timingElements.forEach((el) => (el.innerText = savedTiming));
-  }
-
-  const savedUPI = localStorage.getItem("roc_upi");
-  if (savedUPI) {
-    const upiElements = document.querySelectorAll("#upiIdText, #applyUpiText");
-    upiElements.forEach((el) => (el.innerText = savedUPI));
-  }
-
-  updateAllStoreBadges();
-  setInterval(updateAllStoreBadges, 60000);
+// पेज लोड होते ही और हर 60 सेकंड में सिंक चलाएं
+document.addEventListener("DOMContentLoaded", () => {
+  setTimeBasedStatus();
+  syncWithGoogleSheet();
 });
+
+setInterval(syncWithGoogleSheet, 60000);
